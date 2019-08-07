@@ -7,22 +7,24 @@ using UnityEngine;
 public class BlockFactoryScript : MonoBehaviour
 {
     public GameObject Block, Floor;
-    public int MAX_ROOM = 15, MIN_ROOM = 5, MERGIN = 3;
-    public List<Division> divList = new List<Division>();
+    public int MAX_ROOM = 15, MIN_ROOM = 5, MERGIN = 2;
+    static public List<Division> divList = new List<Division>();
+    static public int divListSize;
     // Start is called before the first frame update
     void Start()
     {
-        
-        DivisionGenerator(0, 29, 0, 29);
+        FillBlock();
+        DivisionGenerator(0, (int)Floor.transform.localScale.x - 1, 0, (int)Floor.transform.localScale.z - 1);
         bool f = (Random.Range(0,2)==0);
         for(int i = 0; i < 5; i++){
             SplitDivision(f);
             f = !f;
         }
-        for(int i = 0; i < divList.Count; i++){
+        divListSize = divList.Count;
+        for(int i = 0; i < divListSize; i++){
             RoomSet(divList[i]);
         }
-        FillBlock();
+        //FillBlock();
     }
    void FillBlock()
    {
@@ -35,9 +37,9 @@ public class BlockFactoryScript : MonoBehaviour
             for(int j = 0; j <= zfloorSize; j++)
             {
                 tp.z = -zfloorSize/2 + j;
-                if(!(divList[0].Room.left < i && i < divList[0].Room.right && divList[0].Room.bottom < j && j < divList[0].Room.top)){
+                //if(!(divList[0].Room.left < i && i < divList[0].Room.right && divList[0].Room.bottom < j && j < divList[0].Room.top)){
                     Instantiate(Block, tp, transform.rotation);
-                }
+                //}
             }
         }
    }
@@ -60,7 +62,7 @@ public class BlockFactoryScript : MonoBehaviour
         }
         if(!HorizontalOrVerticle && Parent.Outer.height <= MIN_ROOM)
         {
-          // divList.Add(Parent);
+           //divList.Add(Parent);
            return;
         }
         //区間の幅を部屋が作れるように余裕を持たせて設定する
@@ -98,6 +100,7 @@ public class BlockFactoryScript : MonoBehaviour
         int RoomWidth = Random.Range(MIN_ROOM, RoomWidthMax + 1);
         int RoomHeight = Random.Range(MIN_ROOM, RoomHeightMax + 1);
 
+
         RoomWidth = Mathf.Min(RoomWidth, MAX_ROOM);
         RoomHeight = Mathf.Min(RoomHeight, MAX_ROOM);
 
@@ -106,8 +109,12 @@ public class BlockFactoryScript : MonoBehaviour
 
         div.Room.SetRect(left + RoomWidth, left, bottom + RoomHeight, bottom);
     }
-    void CreatRoom(Division div){
-        
+    public Vector4 CreatRoom(int i){
+        return new Vector4(divList[i].Room.left, divList[i].Room.right, divList[i].Room.bottom, divList[i].Room.top);
+    }
+
+    public int ListSize(){
+        return divListSize;
     }
 
     // Update is called once per frame
