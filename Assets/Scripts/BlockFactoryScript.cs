@@ -7,14 +7,14 @@ using UnityEngine;
 public class BlockFactoryScript : MonoBehaviour
 {
     public GameObject Block, Floor;
-    public int MAX_ROOM = 15, MIN_ROOM = 5, MERGIN = 2;
+    public int MAX_ROOM, MIN_ROOM, MERGIN;
     static public List<Division> divList = new List<Division>();
     static public int divListSize;
     // Start is called before the first frame update
     void Start()
     {
         FillBlock();
-        DivisionGenerator(0, (int)Floor.transform.localScale.x - 1, 0, (int)Floor.transform.localScale.z - 1);
+        DivisionGenerator(2, (int)Floor.transform.localScale.x - 3, 2, (int)Floor.transform.localScale.z - 3);
         bool f = (Random.Range(0,2)==0);
         for(int i = 0; i < 5; i++){
             SplitDivision(f);
@@ -65,27 +65,21 @@ public class BlockFactoryScript : MonoBehaviour
            //divList.Add(Parent);
            return;
         }
+        Division Child = new Division();
         //区間の幅を部屋が作れるように余裕を持たせて設定する
         if(HorizontalOrVerticle)
         {
-            r = Parent.Outer.right - MAX_ROOM - MERGIN;
-            l = Parent.Outer.left + MAX_ROOM + MERGIN;
-        }
-        else
-        {
-            r = Parent.Outer.top - MAX_ROOM - MERGIN;
-            l = Parent.Outer.bottom + MAX_ROOM + MERGIN;
-        }
-        int length = r - l + 1;
-        int point = l + Random.Range(0, length);
-        Division Child = new Division();
-        if(HorizontalOrVerticle)
-        {
+            r = Parent.Outer.right - MIN_ROOM - MERGIN;
+            l = Parent.Outer.left + MIN_ROOM + MERGIN;
+            int point = Random.Range(l, r);
             Child.Outer.SetRect(point, Parent.Outer.left, Parent.Outer.top, Parent.Outer.bottom);
             Parent.Outer.left = point;
         }
         else
         {
+            r = Parent.Outer.top - MIN_ROOM - MERGIN;
+            l = Parent.Outer.bottom + MIN_ROOM + MERGIN;
+            int point = Random.Range(l, r);
             Child.Outer.SetRect(Parent.Outer.right, Parent.Outer.left, point, Parent.Outer.bottom);
             Parent.Outer.bottom = point;
         }

@@ -12,7 +12,7 @@ public class BlockStript : MonoBehaviour
         x = xcount;
         z = zcount;
         zcount++;
-        if(zcount >= 50){
+        if(zcount >= 30){
             zcount = 0;
             xcount++;
         }
