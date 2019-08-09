@@ -10,7 +10,7 @@ public class BlockFactoryScript : MonoBehaviour
     public GameObject Block, Floor;
     public int MAX_ROOM, MIN_ROOM, MERGIN;
     static public List<Division> divList = new List<Division>();
-    static public int divListSize;
+    static public List<Road> RoadList = new List<Road>();  
     public System.Random rd = new System.Random();
     // Start is called before the first frame update
     void Start()
@@ -22,11 +22,11 @@ public class BlockFactoryScript : MonoBehaviour
         
         SplitDivision(f);
     
-        divListSize = divList.Count;
-        for(int i = 0; i < divListSize; i++){
+        for(int i = 0; i < divList.Count; i++){
             RoomSet(divList[i]);
             //Debug.Log(CreatRoad(i));
         }
+        CreatRoad();
         //FillBlock();
     }
    void FillBlock()
@@ -34,15 +34,14 @@ public class BlockFactoryScript : MonoBehaviour
         float xfloorSize = Floor.transform.localScale.x - 1;
         float zfloorSize = Floor.transform.localScale.z - 1;
         Vector3 tp = new Vector3(-xfloorSize/2, 0.5f, -zfloorSize/2);
-        for(int i = 0; i <= 49; i++)
+        for(int i = 0; i <= (int)xfloorSize; i++)
         {
-            tp.x = -24.5f + i;
-            for(int j = 0; j <= 49; j++)
+            tp.x = -xfloorSize/2 + (float)i;
+            for(int j = 0; j <= (int)zfloorSize; j++)
             {
-                tp.z = -24.5f + j;
-                //if(!(divList[0].Room.left < i && i < divList[0].Room.right && divList[0].Room.bottom < j && j < divList[0].Room.top)){
-                    Instantiate(Block, tp, transform.rotation);
-                //}
+                tp.z = -zfloorSize/2 + (float)j;
+                Instantiate(Block, tp, transform.rotation);
+            
             }
         }
    }
@@ -120,10 +119,95 @@ public class BlockFactoryScript : MonoBehaviour
         RoomWidth = Mathf.Min(RoomWidth, MAX_ROOM);
         RoomHeight = Mathf.Min(RoomHeight, MAX_ROOM);
 
-        int left = div.Outer.left + MERGIN + rd.Next(0, div.Outer.width - RoomWidth - MERGIN + 1); 
-        int bottom = div.Outer.bottom + MERGIN + rd.Next(0, div.Outer.height - RoomHeight - MERGIN + 1);
+        int left = div.Outer.left + MERGIN + rd.Next(0, div.Outer.width - RoomWidth - MERGIN * 2 + 1); 
+        int bottom = div.Outer.bottom + MERGIN + rd.Next(0, div.Outer.height - RoomHeight - MERGIN * 2 + 1);
 
         div.Room.SetRect(left + RoomWidth, left, bottom + RoomHeight, bottom);
+    }
+    public void CreatRoad(){
+        for(int i = 1; i < divList.Count; i++){
+            if(divList[i-1].Outer.right == divList[i].Outer.left){
+                Road road1 = new Road();
+                road1.HorizontalOrVerticle = true;
+                road1.start = rd.Next(divList[i-1].Room.bottom, divList[i-1].Room.top + 1);
+                road1.right = divList[i-1].Outer.right;
+                road1.left = divList[i-1].Room.right;
+                Road road2 = new Road();
+                road2.HorizontalOrVerticle = true;
+                road2.start = rd.Next(divList[i].Room.bottom, divList[i].Room.top + 1);
+                road2.right = divList[i].Room.left;
+                road2.left = divList[i].Outer.left;
+                Road road3 = new Road();
+                road3.HorizontalOrVerticle = false;
+                road3.start = divList[i].Outer.left;
+                road3.bottom = Mathf.Min(road1.start, road2.start);
+                road3.top = Mathf.Max(road1.start, road2.start);
+                RoadList.Add(road1); 
+                RoadList.Add(road2); 
+                RoadList.Add(road3);
+            }
+            else if(divList[i-1].Outer.left == divList[i].Outer.right){
+                Road road1 = new Road();
+                road1.HorizontalOrVerticle = true;
+                road1.start = rd.Next(divList[i-1].Room.bottom, divList[i-1].Room.top + 1);
+                road1.left = divList[i-1].Outer.left;
+                road1.right = divList[i-1].Room.left;
+                Road road2 = new Road();
+                road2.HorizontalOrVerticle = true;
+                road2.start = rd.Next(divList[i].Room.bottom, divList[i].Room.top + 1);
+                road2.left = divList[i].Room.right;
+                road2.right = divList[i].Outer.right;
+                Road road3 = new Road();
+                road3.HorizontalOrVerticle = false;
+                road3.start = divList[i].Outer.right;
+                road3.bottom = Mathf.Min(road1.start, road2.start);
+                road3.top = Mathf.Max(road1.start, road2.start);
+                RoadList.Add(road1); 
+                RoadList.Add(road2); 
+                RoadList.Add(road3);
+            }
+            else if(divList[i-1].Outer.top == divList[i].Outer.bottom){
+                Road road1 = new Road();
+                road1.HorizontalOrVerticle = false;
+                road1.start = rd.Next(divList[i-1].Room.left, divList[i-1].Room.right + 1);
+                road1.top = divList[i-1].Outer.top;
+                road1.bottom = divList[i-1].Room.top;
+                Road road2 = new Road();
+                road2.HorizontalOrVerticle = false;
+                road2.start = rd.Next(divList[i].Room.left, divList[i].Room.right + 1);
+                road2.top = divList[i].Room.bottom;
+                road2.bottom = divList[i].Outer.bottom;
+                Road road3 = new Road();
+                road3.HorizontalOrVerticle = true;
+                road3.start = divList[i].Outer.bottom;
+                road3.left = Mathf.Min(road1.start, road2.start);
+                road3.right = Mathf.Max(road1.start, road2.start);
+                RoadList.Add(road1); 
+                RoadList.Add(road2); 
+                RoadList.Add(road3);
+            }
+            else if(divList[i-1].Outer.bottom == divList[i].Outer.top){
+                Road road1 = new Road();
+                road1.HorizontalOrVerticle = false;
+                road1.start = rd.Next(divList[i-1].Room.left, divList[i-1].Room.right + 1);
+                road1.bottom = divList[i-1].Outer.bottom;
+                road1.top = divList[i-1].Room.bottom;
+                Road road2 = new Road();
+                road2.HorizontalOrVerticle = false;
+                road2.start = rd.Next(divList[i].Room.left, divList[i].Room.right + 1);
+                road2.bottom = divList[i].Room.top;
+                road2.top = divList[i].Outer.top;
+                Road road3 = new Road();
+                road3.HorizontalOrVerticle = true;
+                road3.start = divList[i].Outer.top;
+                road3.bottom = Mathf.Min(road1.start, road2.start);
+                road3.top = Mathf.Max(road1.start, road2.start);
+                RoadList.Add(road1); 
+                RoadList.Add(road2); 
+                RoadList.Add(road3);
+            }
+
+        }
     }
 
     // Update is called once per frame
@@ -172,9 +256,10 @@ public class Division
         
     }
 }
-    public class DivisionList
-    {
-        public List<Division> divList = new List<Division>();
-    }
+public class Road
+{        
+    public bool HorizontalOrVerticle;
+    public int left, right, bottom, top, start, end;
+}
 
 }
