@@ -200,8 +200,8 @@ public class BlockFactoryScript : MonoBehaviour
                 Road road3 = new Road();
                 road3.HorizontalOrVerticle = true;
                 road3.start = divList[i].Outer.top;
-                road3.bottom = Mathf.Min(road1.start, road2.start);
-                road3.top = Mathf.Max(road1.start, road2.start);
+                road3.left = Mathf.Min(road1.start, road2.start);
+                road3.right = Mathf.Max(road1.start, road2.start);
                 RoadList.Add(road1); 
                 RoadList.Add(road2); 
                 RoadList.Add(road3);
