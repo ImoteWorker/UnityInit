@@ -4,25 +4,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BlockFactoryScript : MonoBehaviour
 {
     public GameObject Block, Floor;
     public int MAX_ROOM, MIN_ROOM, MERGIN;
     static public List<Division> divList = new List<Division>();
     static public int divListSize;
+    public System.Random rd = new System.Random();
     // Start is called before the first frame update
     void Start()
     {
         FillBlock();
-        DivisionGenerator(2, (int)Floor.transform.localScale.x - 3, 2, (int)Floor.transform.localScale.z - 3);
-        bool f = (Random.Range(0,2)==0);
-        for(int i = 0; i < 5; i++){
-            SplitDivision(f);
-            f = !f;
-        }
+        DivisionGenerator(0, (int)Floor.transform.localScale.x - 1, 0, (int)Floor.transform.localScale.z - 1);
+        //Debug.Log(CreatRoad(0));
+        bool f = (rd.Next(0,2)==0);
+        
+        SplitDivision(f);
+    
         divListSize = divList.Count;
         for(int i = 0; i < divListSize; i++){
             RoomSet(divList[i]);
+            //Debug.Log(CreatRoad(i));
         }
         //FillBlock();
     }
@@ -31,12 +34,12 @@ public class BlockFactoryScript : MonoBehaviour
         float xfloorSize = Floor.transform.localScale.x - 1;
         float zfloorSize = Floor.transform.localScale.z - 1;
         Vector3 tp = new Vector3(-xfloorSize/2, 0.5f, -zfloorSize/2);
-        for(int i = 0; i <= xfloorSize; i++)
+        for(int i = 0; i <= 49; i++)
         {
-            tp.x = -xfloorSize/2 + i;
-            for(int j = 0; j <= zfloorSize; j++)
+            tp.x = -24.5f + i;
+            for(int j = 0; j <= 49; j++)
             {
-                tp.z = -zfloorSize/2 + j;
+                tp.z = -24.5f + j;
                 //if(!(divList[0].Room.left < i && i < divList[0].Room.right && divList[0].Room.bottom < j && j < divList[0].Room.top)){
                     Instantiate(Block, tp, transform.rotation);
                 //}
@@ -54,61 +57,73 @@ public class BlockFactoryScript : MonoBehaviour
         int r, l;
         Division Parent = divList[divList.Count-1];
         divList.Remove(Parent);
-        //区画の幅が部屋の辺の最小値よりも小さいならそれ以上分割しない
-        if(HorizontalOrVerticle && Parent.Outer.width <= MIN_ROOM)
-        {
-           //divList.Add(Parent);
-           return;
-        }
-        if(!HorizontalOrVerticle && Parent.Outer.height <= MIN_ROOM)
-        {
-           //divList.Add(Parent);
-           return;
-        }
-        Division Child = new Division();
-        //区間の幅を部屋が作れるように余裕を持たせて設定する
+        int width = Parent.Outer.right - Parent.Outer.left;
+        int height = Parent.Outer.top - Parent.Outer.bottom;
+
         if(HorizontalOrVerticle)
         {
-            r = Parent.Outer.right - MIN_ROOM - MERGIN;
-            l = Parent.Outer.left + MIN_ROOM + MERGIN;
-            int point = Random.Range(l, r);
+            if(Parent.Outer.width <= (MIN_ROOM + MERGIN * 2) * 2 + 1 || Parent.Outer.height <= (MIN_ROOM + MERGIN * 2) * 2 + 1){
+                divList.Add(Parent);
+                return;
+            }
+            r = Parent.Outer.right - MERGIN - MIN_ROOM * 2;
+            l = Parent.Outer.left + MERGIN + MIN_ROOM * 2;
+            int point = rd.Next(l, r);
+            Division Child = new Division();
             Child.Outer.SetRect(point, Parent.Outer.left, Parent.Outer.top, Parent.Outer.bottom);
             Parent.Outer.left = point;
+            if(Child.Outer.area < Parent.Outer.area){
+                divList.Add(Child);
+                divList.Add(Parent);
+            }
+            else{
+                divList.Add(Parent);
+                divList.Add(Child);
+            }
         }
         else
         {
-            r = Parent.Outer.top - MIN_ROOM - MERGIN;
-            l = Parent.Outer.bottom + MIN_ROOM + MERGIN;
-            int point = Random.Range(l, r);
+            if(Parent.Outer.height <= (MIN_ROOM + MERGIN * 2) * 2 + 1 || Parent.Outer.width <= (MIN_ROOM + MERGIN * 2) * 2 + 1){
+                divList.Add(Parent);
+                return;
+            }
+            r = Parent.Outer.top - MERGIN * 2 -MIN_ROOM;
+            l = Parent.Outer.bottom + MERGIN * 2 + MIN_ROOM;
+            int point = rd.Next(l, r);
+            Division Child = new Division();
             Child.Outer.SetRect(Parent.Outer.right, Parent.Outer.left, point, Parent.Outer.bottom);
             Parent.Outer.bottom = point;
+            if(Child.Outer.area < Parent.Outer.area){
+                divList.Add(Child);
+                divList.Add(Parent);
+            }
+            else{
+                divList.Add(Parent);
+                divList.Add(Child);
+            }
         }
-        divList.Add(Child);
-        divList.Add(Parent);
+        SplitDivision(!HorizontalOrVerticle);
+        
     }
     void RoomSet(Division div){
 
+        //Debug.Log(div.Outer.width);
+        //Debug.Log(div.Outer.height);
         int RoomWidthMax = div.Outer.width - MERGIN * 2;
         int RoomHeightMax = div.Outer.height - MERGIN * 2;
 
-        int RoomWidth = Random.Range(MIN_ROOM, RoomWidthMax + 1);
-        int RoomHeight = Random.Range(MIN_ROOM, RoomHeightMax + 1);
-
+        //Debug.Log(RoomWidthMax);
+        //Debug.Log(RoomHeightMax);
+        int RoomWidth = rd.Next(MIN_ROOM, RoomWidthMax + 1);
+        int RoomHeight = rd.Next(MIN_ROOM, RoomHeightMax + 1);
 
         RoomWidth = Mathf.Min(RoomWidth, MAX_ROOM);
         RoomHeight = Mathf.Min(RoomHeight, MAX_ROOM);
 
-        int left = div.Outer.left + MERGIN + Random.Range(0, div.Outer.width - RoomWidth - MERGIN + 1); 
-        int bottom = div.Outer.bottom + MERGIN + Random.Range(0, div.Outer.height - RoomHeight - MERGIN + 1);
+        int left = div.Outer.left + MERGIN + rd.Next(0, div.Outer.width - RoomWidth - MERGIN + 1); 
+        int bottom = div.Outer.bottom + MERGIN + rd.Next(0, div.Outer.height - RoomHeight - MERGIN + 1);
 
         div.Room.SetRect(left + RoomWidth, left, bottom + RoomHeight, bottom);
-    }
-    public Vector4 CreatRoom(int i){
-        return new Vector4(divList[i].Room.left, divList[i].Room.right, divList[i].Room.bottom, divList[i].Room.top);
-    }
-
-    public int ListSize(){
-        return divListSize;
     }
 
     // Update is called once per frame
@@ -122,7 +137,7 @@ public class Division
 {
     public class SubDivision
     {
-        public int top, bottom, right, left, width, height, area;
+        public int top, bottom, right, left; //width, height, area;
         public SubDivision()
         {
         }
@@ -132,10 +147,20 @@ public class Division
             left = Left;
             top = Top;
             bottom = Bottom;
-            width = right - left;
-            height = top - bottom;
-            area = width * height;
+            //width = Right - Left;
+            //height = Top - Bottom;
+            //area = width * height;
         }
+        public int width{
+           get {return right - left;}
+        }
+        public int height{
+            get {return top - bottom;}
+        }
+        public int area{
+            get {return width * height;}
+        }
+        
     }
     public SubDivision Outer;
     public SubDivision Room;
@@ -147,4 +172,9 @@ public class Division
         
     }
 }
+    public class DivisionList
+    {
+        public List<Division> divList = new List<Division>();
+    }
+
 }

@@ -417,8 +417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Block: {fileID: 1155447225254934, guid: 30918273542baf943938154f46ebb122, type: 3}
   Floor: {fileID: 1184587971}
-  MAX_ROOM: 10
-  MIN_ROOM: 5
+  MAX_ROOM: 15
+  MIN_ROOM: 3
   MERGIN: 2
 --- !u!4 &1567627116
 Transform:
