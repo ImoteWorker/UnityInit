@@ -7,16 +7,17 @@ using UnityEngine;
 
 public class BlockFactoryScript : MonoBehaviour
 {
-    public GameObject Block, Floor;
-    public int MAX_ROOM, MIN_ROOM, MERGIN;
+    public GameObject Block;
+    public int MAX_ROOM, MIN_ROOM, MERGIN, FloorX = 50, FloorZ = 50;
     static public List<Division> divList = new List<Division>();
     static public List<Road> RoadList = new List<Road>();  
     public System.Random rd = new System.Random();
+    static public int[,] WallLocation = new int[100, 100];
     // Start is called before the first frame update
     void Start()
     {
         FillBlock();
-        DivisionGenerator(0, (int)Floor.transform.localScale.x - 1, 0, (int)Floor.transform.localScale.z - 1);
+        DivisionGenerator(0, (int)FloorX - 1, 0, (int)FloorZ - 1);
         //Debug.Log(CreatRoad(0));
         bool f = (rd.Next(0,2)==0);
         
@@ -31,8 +32,8 @@ public class BlockFactoryScript : MonoBehaviour
     }
    void FillBlock()
    {
-        float xfloorSize = Floor.transform.localScale.x - 1;
-        float zfloorSize = Floor.transform.localScale.z - 1;
+        float xfloorSize = FloorX - 1;
+        float zfloorSize = FloorZ - 1;
         Vector3 tp = new Vector3(-xfloorSize/2, 0.5f, -zfloorSize/2);
         for(int i = 0; i <= (int)xfloorSize; i++)
         {
@@ -41,7 +42,7 @@ public class BlockFactoryScript : MonoBehaviour
             {
                 tp.z = -zfloorSize/2 + (float)j;
                 Instantiate(Block, tp, transform.rotation);
-            
+                WallLocation[i, j] = 1;
             }
         }
    }

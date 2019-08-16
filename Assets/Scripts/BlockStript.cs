@@ -7,12 +7,13 @@ using UnityEngine;
 public class BlockStript : MonoBehaviour
 {
     static int xcount = 0, zcount = -1;
+    public int FloorSize = 50;
     int x, z;
     BlockStript(){
         x = xcount;
         z = zcount;
         zcount++;
-        if(zcount >= 50){
+        if(zcount >= FloorSize){
             zcount = 0;
             xcount++;
         }
@@ -27,9 +28,11 @@ public class BlockStript : MonoBehaviour
         Debug.Log(transform.position.z);
         Debug.Log("--------------");*/
         List<Division> divList = BlockFactoryScript.divList;
+        int[,] WallLocation = BlockFactoryScript.WallLocation;
         for(int i = 0; i < divList.Count; i++){
             if(divList[i].Room.left <= x && x <= divList[i].Room.right && divList[i].Room.bottom <= z && z <= divList[i].Room.top){
                 Destroy(gameObject);
+                WallLocation[x, z] = 0;
             }
             /*Debug.Log("区画");
             Debug.Log(divList[i].Outer.left);
@@ -90,11 +93,13 @@ public class BlockStript : MonoBehaviour
             if(RoadList[i].HorizontalOrVerticle){
                 if(RoadList[i].start == z && RoadList[i].left <= x && x <= RoadList[i].right){
                     Destroy(gameObject);
+                    WallLocation[x, z] = 0;
                 }
             }
             else{
                 if(RoadList[i].start == x && RoadList[i].bottom <= z && z <= RoadList[i].top){
                     Destroy(gameObject);
+                    WallLocation[x, z] = 0;
                 }
             }
         }

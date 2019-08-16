@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿namespace MyDungeon
+{
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -20,7 +22,7 @@ public class FloorGenerator : MonoBehaviour
     List<Vector2Int> Gen = new List<Vector2Int>();//通路生成開始位置
     SortedSet<int> SetX = new SortedSet<int>();//すでに生成した縦の通路のx
     SortedSet<int> SetZ = new SortedSet<int>();//すでに生成した横の通路のz
-    
+    public static int[,] WallLocation = new int[100, 100];
     // Start is called before the first frame update
     void Start()
     {
@@ -340,13 +342,23 @@ public class FloorGenerator : MonoBehaviour
         for(int i=0;i<lineNum;i++){
             cutBranch(Area,Gen[lineNum-1-i]);
         }
+        for(int i = 0; i < AreaX;i++){
+            for(int j = 0; j < AreaZ; j++){
+                WallLocation[i, j] = 0;
+            }
+        }
+
         //最後に生成した通路から枝切り
         for(int i=0;i<AreaX+2;i++){
             for(int j=0;j<AreaZ+2;j++){
-                if(Area[i,j]==0 || Area[i,j]==9) Instantiate(Wall,transform.position+(new Vector3(i,0,j)),transform.rotation);
+                if(Area[i,j]==0 || Area[i,j]==9){
+                    Instantiate(Wall,transform.position+(new Vector3(i,0,j)),transform.rotation);
+                    WallLocation[i, j] = 1;
+                }
             }
         }
         //インスタンスとして配置
     }
     //壁:0 部屋:1 通路:2 部屋からの通路:3 外壁:9
+}
 }
