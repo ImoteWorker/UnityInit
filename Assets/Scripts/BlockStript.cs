@@ -20,7 +20,7 @@ public class BlockStript : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void check()
     {
         /*Debug.Log(x);
         Debug.Log(transform.position.x);
@@ -103,7 +103,7 @@ public class BlockStript : MonoBehaviour
                 }
             }
         }
-        
+        BlockFactoryScript.setList(WallLocation);
     }
 
     // Update is called once per frame

@@ -13,11 +13,12 @@ public class BlockFactoryScript : MonoBehaviour
     static public List<Road> RoadList = new List<Road>();  
     public System.Random rd = new System.Random();
     static public int[,] WallLocation = new int[100, 100];
+    public List<GameObject> blockList = new List<GameObject>();
     // Start is called before the first frame update
-    void Start()
+    public void generate()
     {
         FillBlock();
-        DivisionGenerator(0, (int)FloorX - 1, 0, (int)FloorZ - 1);
+        DivisionGenerator(0, (int)FloorX - 1, 1, (int)FloorZ);//変更
         //Debug.Log(CreatRoad(0));
         bool f = (rd.Next(0,2)==0);
         
@@ -34,14 +35,16 @@ public class BlockFactoryScript : MonoBehaviour
    {
         float xfloorSize = FloorX - 1;
         float zfloorSize = FloorZ - 1;
-        Vector3 tp = new Vector3(-xfloorSize/2, 0.5f, -zfloorSize/2);
+        Vector3 tp = new Vector3(0f, 0.5f, 0f);
+        GameObject obj;
         for(int i = 0; i <= (int)xfloorSize; i++)
         {
-            tp.x = -xfloorSize/2 + (float)i;
+            tp.x = (float)i;
             for(int j = 0; j <= (int)zfloorSize; j++)
             {
-                tp.z = -zfloorSize/2 + (float)j;
-                Instantiate(Block, tp, transform.rotation);
+                tp.z = (float)j;
+                obj = Instantiate(Block, tp, transform.rotation);
+                blockList.Add(obj);
                 WallLocation[i, j] = 1;
             }
         }
@@ -211,6 +214,9 @@ public class BlockFactoryScript : MonoBehaviour
         }
     }
 
+    public static void setList(int[,] x){
+        WallLocation = x;
+    }
     // Update is called once per frame
     void Update()
     {
