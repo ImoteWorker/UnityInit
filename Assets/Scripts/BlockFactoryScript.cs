@@ -8,14 +8,16 @@ using UnityEngine;
 public class BlockFactoryScript : MonoBehaviour
 {
     public GameObject Block;
-    public int MAX_ROOM, MIN_ROOM, MERGIN, FloorX = 50, FloorZ = 50;
+    public int MAX_ROOM, MIN_ROOM, MERGIN, FloorX = 40, FloorZ = 40;
     static public List<Division> divList = new List<Division>();
     static public List<Road> RoadList = new List<Road>();  
     public System.Random rd = new System.Random();
     static public int[,] WallLocation = new int[100, 100];
+    static public bool switching = false;
     // Start is called before the first frame update
     void Start()
     {
+        switching = true;
         FillBlock();
         DivisionGenerator(0, (int)FloorX - 1, 0, (int)FloorZ - 1);
         //Debug.Log(CreatRoad(0));
@@ -32,15 +34,15 @@ public class BlockFactoryScript : MonoBehaviour
     }
    void FillBlock()
    {
-        float xfloorSize = FloorX - 1;
-        float zfloorSize = FloorZ - 1;
-        Vector3 tp = new Vector3(-xfloorSize/2, 0.5f, -zfloorSize/2);
-        for(int i = 0; i <= (int)xfloorSize; i++)
+        //float xfloorSize = FloorX - 1;
+        //float zfloorSize = FloorZ - 1;
+        Vector3 tp = new Vector3(0, 0.5f, 0);
+        for(int i = 0; i < FloorX; i++)
         {
-            tp.x = -xfloorSize/2 + (float)i;
-            for(int j = 0; j <= (int)zfloorSize; j++)
+            tp.x = i;
+            for(int j = 0; j < FloorZ; j++)
             {
-                tp.z = -zfloorSize/2 + (float)j;
+                tp.z = j;
                 Instantiate(Block, tp, transform.rotation);
                 WallLocation[i, j] = 1;
             }

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿namespace MyDungeon
+{
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,9 +18,26 @@ public class FirstPersonMove : MonoBehaviour
     private float turnTime;
     private float x;
     private float z;
+
+    void StartPoint()
+    {  
+        if(BlockFactoryScript.switching){
+            int[,] WallLocation = BlockFactoryScript.WallLocation;
+            List<Division> divList = BlockFactoryScript.divList;
+            Debug.Log(divList.Count);
+            int rd = UnityEngine.Random.Range(0,divList.Count);
+            float xLocation = (divList[0].Room.right + divList[0].Room.left)/2;
+            float zLocation = (divList[0].Room.top + divList[0].Room.bottom)/2;
+            transform.Translate(xLocation, 0f, zLocation);
+        }else{
+            int[,] WallLocation = FloorGenerator.WallLocation;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
+        
+        StartPoint();
         moving = false;
         moveTime = 0;
         naname = false;
@@ -62,4 +81,5 @@ public class FirstPersonMove : MonoBehaviour
             turnTime-=Time.deltaTime;
         }
     }
+}
 }
