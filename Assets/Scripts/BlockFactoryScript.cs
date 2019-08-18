@@ -12,11 +12,21 @@ public class BlockFactoryScript : MonoBehaviour
     static public List<Division> divList = new List<Division>();
     static public List<Road> RoadList = new List<Road>();  
     public System.Random rd = new System.Random();
+<<<<<<< Updated upstream
+=======
+    public List<GameObject> blockList = new List<GameObject>();
+    static public int[,] WallLocation = new int[100, 100];
+>>>>>>> Stashed changes
     // Start is called before the first frame update
-    void Start()
+    public void generate()
     {
+        blockList.Clear();
         FillBlock();
+<<<<<<< Updated upstream
         DivisionGenerator(0, (int)Floor.transform.localScale.x - 1, 0, (int)Floor.transform.localScale.z - 1);
+=======
+        DivisionGenerator(0, (int)FloorX - 1, 1, (int)FloorZ);/////ちょっといじった
+>>>>>>> Stashed changes
         //Debug.Log(CreatRoad(0));
         bool f = (rd.Next(0,2)==0);
         
@@ -31,20 +41,35 @@ public class BlockFactoryScript : MonoBehaviour
     }
    void FillBlock()
    {
+<<<<<<< Updated upstream
         float xfloorSize = Floor.transform.localScale.x - 1;
         float zfloorSize = Floor.transform.localScale.z - 1;
         Vector3 tp = new Vector3(-xfloorSize/2, 0.5f, -zfloorSize/2);
+=======
+        float xfloorSize = FloorX - 1;
+        float zfloorSize = FloorZ - 1;
+        Vector3 tp = new Vector3(0f, 0.5f, 0f);
+        GameObject obj;
+>>>>>>> Stashed changes
         for(int i = 0; i <= (int)xfloorSize; i++)
         {
-            tp.x = -xfloorSize/2 + (float)i;
+            tp.x = (float)i;
             for(int j = 0; j <= (int)zfloorSize; j++)
             {
+<<<<<<< Updated upstream
                 tp.z = -zfloorSize/2 + (float)j;
                 Instantiate(Block, tp, transform.rotation);
             
+=======
+                tp.z = (float)j;
+                obj = Instantiate(Block, tp, transform.rotation);
+                blockList.Add(obj);
+                WallLocation[i, j] = 1;
+>>>>>>> Stashed changes
             }
         }
    }
+   //位置を変えた
     void DivisionGenerator(int left, int right, int bottom, int top)
     {
         Division div = new Division();
@@ -214,6 +239,10 @@ public class BlockFactoryScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public static void setWall(int[,] x){
+        WallLocation = x;
     }
 }
 

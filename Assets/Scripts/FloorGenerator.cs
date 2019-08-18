@@ -24,7 +24,7 @@ public class FloorGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        generate();
+        //generate();
     }
 
     // Update is called once per frame
