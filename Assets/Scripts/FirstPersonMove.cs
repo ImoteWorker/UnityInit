@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyDungeon;
 
 public class FirstPersonMove : MonoBehaviour
 {
@@ -20,7 +21,18 @@ public class FirstPersonMove : MonoBehaviour
 
     public Floor fs;
     public GameObject generator;
-    // Start is called before the first frame update
+    
+    void StartPoint()
+    {  
+        int[,] WallLocation = BlockFactoryScript.WallLocation;
+        List<Division> divList = BlockFactoryScript.divList;
+        Debug.Log(divList.Count);
+        int rd = UnityEngine.Random.Range(0,divList.Count);
+        float xLocation = (divList[0].Room.right + divList[0].Room.left)/2;
+        float zLocation = (divList[0].Room.top + divList[0].Room.bottom)/2;
+        transform.Translate(xLocation, 0f, zLocation);
+    }
+
     public void setting()
     {
         moving = false;
@@ -32,14 +44,17 @@ public class FirstPersonMove : MonoBehaviour
         x=0;
         z=0;
         fs = generator.GetComponent<Floor>();
-        int posX;
-        int posZ;
-        while(true){
-            posX = Random.Range(1,Floor.x);
-            posZ = Random.Range(1,Floor.z);
-            if(fs.startable(posX,posZ)) break;
-        }
-        transform.position = new Vector3(posX,0.5f,posZ);
+        if(!fs.type) StartPoint();
+        else{
+            int posX;
+            int posZ;
+            while(true){
+                posX = Random.Range(1,Floor.x);
+                posZ = Random.Range(1,Floor.z);
+                if(fs.startable(posX,posZ)) break;
+            }
+            transform.position = new Vector3(posX,0.5f,posZ);
+        } 
     }
 
     // Update is called once per frame
