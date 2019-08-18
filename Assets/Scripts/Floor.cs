@@ -49,11 +49,11 @@ public class Floor : MonoBehaviour
     public bool startable(int x,int z){
         if(type){
             if(x<0 || x>fg.AreaX ||z<0 || z>fg.AreaZ) return false;
-            else if(Map[x,z]!=0) return false;
+            else if(Map[x,z]!=1) return false;
         }
         else{
             if(x<0 || x>bfs.FloorX || z<0 || z>bfs.FloorZ) return false;
-            else if(Map[x,z]!=0) return false;
+            else if(Map[x,z]!=1) return false;
         }
         return true;
     }
@@ -61,11 +61,11 @@ public class Floor : MonoBehaviour
     public bool available(int x,int z){
         if(type){
             if(x<0 || x>fg.AreaX ||z<0 || z>fg.AreaZ) return false;
-            else if(Map[x,z]!=0) return false;
+            else if(Map[x,z]==0) return false;
         }
         else{
             if(x<0 || x>bfs.FloorX || z<0 || z>bfs.FloorZ) return false;
-            else if(Map[x,z]!=0) return false;
+            else if(Map[x,z]==0) return false;
         }
         return true;
     }

@@ -32,7 +32,7 @@ public class BlockStript : MonoBehaviour
         for(int i = 0; i < divList.Count; i++){
             if(divList[i].Room.left <= x && x <= divList[i].Room.right && divList[i].Room.bottom <= z && z <= divList[i].Room.top){
                 Destroy(gameObject);
-                WallLocation[x, z] = 0;
+                WallLocation[x, z] = 1;
             }
             /*Debug.Log("区画");
             Debug.Log(divList[i].Outer.left);
@@ -93,13 +93,13 @@ public class BlockStript : MonoBehaviour
             if(RoadList[i].HorizontalOrVerticle){
                 if(RoadList[i].start == z && RoadList[i].left <= x && x <= RoadList[i].right){
                     Destroy(gameObject);
-                    WallLocation[x, z] = 0;
+                    WallLocation[x, z] = 2;
                 }
             }
             else{
                 if(RoadList[i].start == x && RoadList[i].bottom <= z && z <= RoadList[i].top){
                     Destroy(gameObject);
-                    WallLocation[x, z] = 0;
+                    WallLocation[x, z] = 2;
                 }
             }
         }

@@ -342,19 +342,22 @@ public class FloorGenerator : MonoBehaviour
         for(int i=0;i<lineNum;i++){
             cutBranch(Area,Gen[lineNum-1-i]);
         }
+        /* 
         for(int i = 0; i < AreaX;i++){
             for(int j = 0; j < AreaZ; j++){
                 WallLocation[i, j] = 0;
             }
         }
-
+        */
         //最後に生成した通路から枝切り
         for(int i=0;i<AreaX+2;i++){
             for(int j=0;j<AreaZ+2;j++){
                 if(Area[i,j]==0 || Area[i,j]==9){
                     Instantiate(Wall,transform.position+(new Vector3(i,0,j)),transform.rotation);
-                    WallLocation[i, j] = 1;
+                    WallLocation[i, j] = 0;
                 }
+                else if(Area[i,j]==1) WallLocation[i,j] = 1;
+                else WallLocation[i,j] = 2;
             }
         }
         //インスタンスとして配置

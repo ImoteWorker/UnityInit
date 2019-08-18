@@ -45,7 +45,7 @@ public class BlockFactoryScript : MonoBehaviour
                 tp.z = (float)j;
                 obj = Instantiate(Block, tp, transform.rotation);
                 blockList.Add(obj);
-                WallLocation[i, j] = 1;
+                WallLocation[i, j] = 0;
             }
         }
    }
