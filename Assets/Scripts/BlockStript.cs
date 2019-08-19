@@ -7,7 +7,7 @@ using UnityEngine;
 public class BlockStript : MonoBehaviour
 {
     static int xcount = 0, zcount = -1;
-    public int FloorSize = 50;
+    public int FloorSize = 40;
     int x, z;
     BlockStript(){
         x = xcount;
