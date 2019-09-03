@@ -31,36 +31,36 @@ public class PlatersMapCreatScript : MonoBehaviour
         }
     }
     void RoadPaint(int x, int z){
-        if(Floor.Map[x,z] == 2 && !Paint[x,z]){
+        if(Floor.Map[x,z]%10 == 2 && !Paint[x,z]){
             Paint[x,z] = true;
-            if(Floor.Map[x-1,z] == 2){
+            if(Floor.Map[x-1,z]%10 == 2){
                 for(int i = 1;;i++){
-                    if(Floor.Map[x-i,z] == 2){
+                    if(Floor.Map[x-i,z]%10 == 2){
                         Paint[x-i,z] = true;
                     }else{
                         return;
                     }
                 }
-            }else if(Floor.Map[x,z-1] == 2){
+            }else if(Floor.Map[x,z-1]%10 == 2){
                 for(int i = 1;;i++){
-                    if(Floor.Map[x,z-i] == 2){
+                    if(Floor.Map[x,z-i]%10 == 2){
                         Paint[x,z-i] = true;
                     }else{
                         return;
                     }
                 }
             }
-            if(Floor.Map[x+1,z] == 2){
+            if(Floor.Map[x+1,z]%10 == 2){
                 for(int i = 1;;i++){
-                    if(Floor.Map[x+i,z] == 2){
+                    if(Floor.Map[x+i,z]%10 == 2){
                         Paint[x+i,z] = true;
                     }else{
                         return;
                     }
                 }
-            }else if(Floor.Map[x,z+1] == 2){
+            }else if(Floor.Map[x,z+1]%10 == 2){
                 for(int i = 1;;i++){
-                    if(Floor.Map[x,z+i] == 2){
+                    if(Floor.Map[x,z+i]%10 == 2){
                         Paint[x,z+i] = true;
                     }else{
                         return;
@@ -72,7 +72,7 @@ public class PlatersMapCreatScript : MonoBehaviour
         }
     }
     void RoomPaint(int x, int z){
-        if(Floor.Map[x,z] == 1 && !Paint[x,z]){
+        if(Floor.Map[x,z]%10 == 1 && !Paint[x,z]){
             Paint[x,z] = true;
             RoomPaint(x-1,z);
             RoomPaint(x,z-1);

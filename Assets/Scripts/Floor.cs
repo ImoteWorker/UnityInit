@@ -6,6 +6,11 @@ using MyDungeon;
 public class Floor : MonoBehaviour
 {
     public static int[,] Map;
+    //
+    //
+    //0:壁, 1:部屋, 2:通路, 3:階段
+    //+10:プレイヤー, +20:敵, +30:アイテム
+    //
     public bool type = true;
 
     static BlockFactoryScript bfs;
@@ -68,5 +73,14 @@ public class Floor : MonoBehaviour
             else if(Map[x,z]==0) return false;
         }
         return true;
+    }
+
+    public void movePlayer(int oldX, int oldZ, int newX, int newZ){
+        Map[oldX,oldZ] -=10;
+        Map[newX,newZ] +=10;
+    }
+
+    public void setChara(int x, int y, int charaType){
+        Map[x,y] += charaType*10;
     }
 }

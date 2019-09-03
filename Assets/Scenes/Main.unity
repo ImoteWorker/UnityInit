@@ -232,6 +232,8 @@ MonoBehaviour:
   turnFrame: 0.2
   masu: 1
   Area: {x: 100, y: 100}
+  posX: 0
+  posZ: 0
   fs: {fileID: 0}
   generator: {fileID: 1013856452}
 --- !u!1 &129874615
