@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -402,8 +402,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -20}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 100, y: -20}
+  m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &502808251
 MonoBehaviour:
@@ -417,8 +417,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c58cee04a7178428166ee041989627, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {fileID: 502808252}
+  data: {fileID: 502808252}
   player: {fileID: 105145137}
+  fg: {fileID: 1013856452}
+  tm: {fileID: 0}
 --- !u!114 &502808252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +454,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: (0,0)
+  m_Text: "(0,0) 1\u30BF\u30FC\u30F3"
 --- !u!222 &502808253
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -822,6 +824,7 @@ GameObject:
   - component: {fileID: 1013856454}
   - component: {fileID: 1013856453}
   - component: {fileID: 1013856455}
+  - component: {fileID: 1013856456}
   m_Layer: 0
   m_Name: Generator
   m_TagString: Untagged
@@ -876,9 +879,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b55733f0fd231c4baf4074bad36b849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   player: {fileID: 105145137}
   bf: {fileID: 294048112}
+--- !u!114 &1013856456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013856452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baac89e4ae6df5445be3436f6f02fc58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 105145137}
+  fpm: {fileID: 0}
+  turnNum: 1
 --- !u!1 &1368350448
 GameObject:
   m_ObjectHideFlags: 0
