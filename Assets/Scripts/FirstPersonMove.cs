@@ -109,7 +109,7 @@ public class FirstPersonMove : MonoBehaviour
                 if(fs.available((int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z)){
                     if(!naname){
                         moveTime = moveFrame;
-                        fs.movePlayer(posZ,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
+                        fs.movePlayer(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
                         posX = (int)transform.position.x+toX*(int)z;
                         posZ = (int)transform.position.z+toZ*(int)z;
                         return true;
@@ -117,7 +117,7 @@ public class FirstPersonMove : MonoBehaviour
                     else{
                         if(fs.available((int)transform.position.x+toX*(int)z,(int)transform.position.z) &&fs.available((int)transform.position.x,(int)transform.position.z+toZ*(int)z)){
                             moveTime = moveFrame;
-                            fs.movePlayer(posZ,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
+                            fs.movePlayer(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
                             posX = (int)transform.position.x+toX*(int)z;
                             posZ = (int)transform.position.z+toZ*(int)z;
                             return true;
