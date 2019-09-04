@@ -22,15 +22,21 @@ public class Floor : MonoBehaviour
     List<GameObject> blockList = new List<GameObject>();
     public static int x;
     public static int z;
+    public static int whatFloor = 0; //現在の階層
     void Start()
     {
         bfs = bf.GetComponent<BlockFactoryScript>();
         blockList = bfs.blockList;
         fg = GetComponent<FloorGenerator>();
         fpm = player.GetComponent<FirstPersonMove>();
+        whatFloor += 1;
+        if(whatFloor == 1){　/*ダンジョンの切り替えができるか実験 */
+            type = false;
+        }else{
+            type = true;
+        }
         generate();
     }
-
     public void generate(){
         if(type){
             fg.generate();
