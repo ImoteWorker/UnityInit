@@ -13,7 +13,7 @@ public class CardHolderScript : MonoBehaviour
     bool f;
     int selectedID;
     bool[] changed = new bool[15];
-    public Vector3 offsetPosition = new Vector3(250f, -15f, 0f);
+    public Vector3 offsetPosition = new Vector3(0f, 0f, 0f);
     // Start is called before the first frame update
     void Start()
     {
