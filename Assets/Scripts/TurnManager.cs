@@ -5,13 +5,15 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public GameObject player;
+    public GameObject map;
     public FirstPersonMove fpm;
-
+    public PlatersMapCreatScript pmcs;
     public int turnNum;
     // Start is called before the first frame update
     void Start()
     {
         fpm = player.GetComponent<FirstPersonMove>();
+        pmcs = map.GetComponent<PlatersMapCreatScript>();
         turnNum=1;
     }
 
@@ -22,6 +24,7 @@ public class TurnManager : MonoBehaviour
 
         if(fpm.action() == false) return;//プレイヤーが行動してないときはここで終了
         turnNum++;
+        pmcs.write();
         //敵の行動
 
         //ターン終了時の効果など

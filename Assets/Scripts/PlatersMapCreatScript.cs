@@ -18,17 +18,18 @@ public class PlatersMapCreatScript : MonoBehaviour
             }
         }
         map.text = "";
+        write();
     }
 
     // Update is called once per frame
-    void Update()
+    public void write()
     {
         //timeTrigger += Time.deltaTime;
-        if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0){
+        //if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0){
             RoadPaint((int)player.transform.position.x, (int)player.transform.position.z);
             RoomPaint((int)player.transform.position.x, (int)player.transform.position.z);
             CreateMap();
-        }
+        //}
     }
     void RoadPaint(int x, int z){
         if(Floor.Map[x,z]%10 == 2 && !Paint[x,z]){
