@@ -10,7 +10,7 @@ public class PlatersMapCreatScript : MonoBehaviour
     public float timeOut = 3000f;
     private float timeTrigger;
     // Start is called before the first frame update
-    void Start()
+    public void setting()
     {
         for(int i = 0; i < Floor.x; i++){
             for(int j = 0; j < Floor.z; j++){
@@ -18,17 +18,17 @@ public class PlatersMapCreatScript : MonoBehaviour
             }
         }
         map.text = "";
-        write();
+        //write();
     }
 
     // Update is called once per frame
-    public void write()
+    public void write(int playerX, int playerZ)
     {
         //timeTrigger += Time.deltaTime;
         //if(Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0){
-            RoadPaint((int)player.transform.position.x, (int)player.transform.position.z);
-            RoomPaint((int)player.transform.position.x, (int)player.transform.position.z);
-            CreateMap();
+            RoadPaint(playerX,playerZ);
+            RoomPaint(playerX,playerZ);
+            CreateMap(playerX,playerZ);
         //}
     }
     void RoadPaint(int x, int z){
@@ -83,11 +83,11 @@ public class PlatersMapCreatScript : MonoBehaviour
             return;
         }
     }
-    void CreateMap(){
+    void CreateMap(int x, int z){
         map.text = "";
         for(int i = 0; i < Floor.x; i++){
             for(int j = 0; j < Floor.z; j++){
-                if(i == player.transform.position.x && j == player.transform.position.z){
+                if(i == x && j == z){
                     map.text += "@";
                 }
                 else if(Paint[i,j]){

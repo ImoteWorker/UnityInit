@@ -21,10 +21,10 @@ public class TurnManager : MonoBehaviour
     void Update()
     {
         //2回行動はここで処理
-
+        //pmcs.write();
         if(fpm.action() == false) return;//プレイヤーが行動してないときはここで終了
         turnNum++;
-        pmcs.write();
+        //pmcs.write();
         //敵の行動
 
         //ターン終了時の効果など

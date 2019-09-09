@@ -17,8 +17,10 @@ public class Floor : MonoBehaviour
     static BlockStript bs;
     static FloorGenerator fg;
     static FirstPersonMove fpm;
+    static PlatersMapCreatScript pmsc;
     public GameObject player;
     public GameObject bf;
+    public GameObject map;
     List<GameObject> blockList = new List<GameObject>();
     public static int x;
     public static int z;
@@ -35,6 +37,8 @@ public class Floor : MonoBehaviour
         }else{
             type = true;
         }
+        pmsc = map.GetComponent<PlatersMapCreatScript>();
+        pmsc.setting();
         generate();
     }
     public void generate(){

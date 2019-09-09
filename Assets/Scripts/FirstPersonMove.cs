@@ -24,6 +24,8 @@ public class FirstPersonMove : MonoBehaviour
 
     public Floor fs;
     public GameObject generator;
+    PlatersMapCreatScript pmcs;
+    public GameObject map;
     
     void StartPoint()
     {  
@@ -58,6 +60,9 @@ public class FirstPersonMove : MonoBehaviour
             transform.position = new Vector3(posX,0.5f,posZ);
         }
         fs.setChara(posX,posZ,1);
+
+        pmcs = map.GetComponent<PlatersMapCreatScript>();
+        pmcs.write(posX,posZ);
     }
 
     // Update is called once per frame
@@ -112,6 +117,7 @@ public class FirstPersonMove : MonoBehaviour
                         fs.movePlayer(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
                         posX = (int)transform.position.x+toX*(int)z;
                         posZ = (int)transform.position.z+toZ*(int)z;
+                        pmcs.write(posX,posZ);
                         return true;
                     }
                     else{
@@ -120,6 +126,7 @@ public class FirstPersonMove : MonoBehaviour
                             fs.movePlayer(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
                             posX = (int)transform.position.x+toX*(int)z;
                             posZ = (int)transform.position.z+toZ*(int)z;
+                            pmcs.write(posX,posZ);
                             return true;
                         }
                     }
