@@ -12,6 +12,7 @@ public class CardHolderScript : MonoBehaviour
     float terminal = 90f;
     bool f;
     int selectedID;
+    bool[] changed = new bool[15];
     public Vector3 offsetPosition = new Vector3(250f, -15f, 0f);
     // Start is called before the first frame update
     void Start()
@@ -55,7 +56,16 @@ public class CardHolderScript : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.X)){
             GameObject selsectedCard = transform.GetChild(selectedID).gameObject;
-            selsectedCard.SetActive(false);
+            //selsectedCard.SetActive(false);
+            changed[selectedID] = ChangeColor(selsectedCard, changed[selectedID]);
+        }
+        else if(Input.GetKeyDown(KeyCode.Space)){
+            for(int i = 0; i < transform.childCount; i++){
+                if(changed[i]){
+                GameObject selsectedCard = transform.GetChild(i).gameObject;
+                Destroy(selsectedCard);
+                }
+            }
         }
     }
     void Arrange(){
@@ -86,13 +96,26 @@ public class CardHolderScript : MonoBehaviour
             }
         }
     }
-    /*void ChangeColor(){
-        GameObject obj = transform.GetChild(selectedID).gameObject;
+    bool ChangeColor(GameObject obj, bool changed){
         var card = obj.GetComponent<Button>();
         var colors = card.colors;
-        colors.normalColor = new Color(165f / 255f, 220f / 255f, 192f / 255f, 255f / 255f);
-
-    }*/
+        if(!changed){
+            colors.normalColor = new Color(165f / 255f, 220f / 255f, 192f / 255f, 255f / 255f);
+            colors.highlightedColor = new Color(165f / 255f, 220f / 255f, 192f / 255f, 255f / 255f);
+            colors.pressedColor = new Color(165f / 255f, 220f / 255f, 192f / 255f, 255f / 255f);
+            colors.disabledColor = new Color(165f / 255f, 220f / 255f, 192f / 255f, 255f / 255f);
+            card.colors = colors;
+            return true;
+        }
+        else{
+            colors.normalColor = new Color(1f, 1f, 1f, 1f);
+            colors.highlightedColor = new Color(1f, 1f, 1f, 1f);
+            colors.pressedColor = new Color(1f, 1f, 1f, 1f);
+            colors.disabledColor = new Color(1f, 1f, 1f, 1f);
+            card.colors = colors;
+            return false;
+        }
+    }
     /*void Motion(){
         for(int elementID = 0; elementID < transform.childCount; elementID++){
             GameObject childCard = transform.GetChild(elementID).gameObject;
