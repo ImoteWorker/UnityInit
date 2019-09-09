@@ -26,6 +26,8 @@ public class FirstPersonMove : MonoBehaviour
     public GameObject generator;
     PlatersMapCreatScript pmcs;
     public GameObject map;
+    //CardHolderScript chs;
+    //public GameObject cardholder;
     
     void StartPoint()
     {  
@@ -63,6 +65,9 @@ public class FirstPersonMove : MonoBehaviour
 
         pmcs = map.GetComponent<PlatersMapCreatScript>();
         pmcs.write(posX,posZ);
+
+        //chs = cardholder.GetComponent<CardHolderScript>();
+        //chs.CardSelect();
     }
 
     // Update is called once per frame
@@ -118,6 +123,7 @@ public class FirstPersonMove : MonoBehaviour
                         posX = (int)transform.position.x+toX*(int)z;
                         posZ = (int)transform.position.z+toZ*(int)z;
                         pmcs.write(posX,posZ);
+                        //chs.CardSelect();
                         return true;
                     }
                     else{
@@ -127,6 +133,7 @@ public class FirstPersonMove : MonoBehaviour
                             posX = (int)transform.position.x+toX*(int)z;
                             posZ = (int)transform.position.z+toZ*(int)z;
                             pmcs.write(posX,posZ);
+                            //chs.CardSelect();
                             return true;
                         }
                     }
