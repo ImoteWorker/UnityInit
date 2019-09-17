@@ -55,11 +55,6 @@ public class CardDisplayScript : MonoBehaviour
             GameObject childObject = Instantiate(Card) as GameObject;
             childObject.transform.parent = this.transform;
         }
-        if(Input.GetKeyDown(KeyCode.Space)){
-            foreach(GameObject item in selectedList){
-                Destroy(item);
-            }
-        }
     }
     void subWhatSelected(int key){
         GameObject card;
@@ -106,7 +101,5 @@ public class CardDisplayScript : MonoBehaviour
             }
         }
     }
-    public void OnClick(){
-        Debug.Log("Button Pushed");
-    }
+
 }
