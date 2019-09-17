@@ -16,5 +16,8 @@ public class CardScript : MonoBehaviour
     {
         
     }
+    public void OnClick(){
+        
+    }
     
 }

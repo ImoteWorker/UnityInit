@@ -63,7 +63,7 @@ public class CardHolderScript : MonoBehaviour
             for(int i = 0; i < transform.childCount; i++){
                 if(changed[i]){
                 GameObject selsectedCard = transform.GetChild(i).gameObject;
-                Destroy(selsectedCard);
+                selsectedCard.SetActive(false);
                 }
             }
         }
@@ -75,7 +75,7 @@ public class CardHolderScript : MonoBehaviour
             float currentAngle = AngleSplit * elementID + offset;
             Card.anchoredPosition = new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), Mathf.Sin(currentAngle * Mathf.Deg2Rad), 0f) * radius + offsetPosition;
             //Debug.Log(elementID);
-            Debug.Log(currentAngle);
+            //Debug.Log(currentAngle);
         }
     }
     void WhatSelected(){
