@@ -33,7 +33,7 @@ public class FirstPersonMove : MonoBehaviour
     {  
         int[,] WallLocation = BlockFactoryScript.WallLocation;
         List<Division> divList = BlockFactoryScript.divList;
-        Debug.Log(divList.Count);
+        //Debug.Log(divList.Count);
         int rd = UnityEngine.Random.Range(0,divList.Count);
         posX = (divList[0].Room.right + divList[0].Room.left)/2;
         posZ = (divList[0].Room.top + divList[0].Room.bottom)/2;

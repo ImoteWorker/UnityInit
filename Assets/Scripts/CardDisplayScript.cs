@@ -18,7 +18,9 @@ public class CardDisplayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WhatSelected();
+        if(isSelectable()){
+            WhatSelected();
+        }
         if(selectedList.Count != 0){
             selectAnimation();
         }
@@ -51,16 +53,16 @@ public class CardDisplayScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha9)){
             subWhatSelected(9);
         }
-        if(Input.GetKeyDown(KeyCode.Alpha0)){
+        if(Input.GetKeyDown(KeyCode.Alpha0) && CardDeckScript.NumOfCards != 0){
             GameObject childObject = Instantiate(Card) as GameObject;
-            childObject.transform.parent = this.transform;
+            childObject.transform.SetParent(this.transform, true);
         }
     }
     void subWhatSelected(int key){
         GameObject card;
         for(int i = 0; i < transform.childCount; i++){
             card = transform.GetChild(i).gameObject;
-            Debug.Log(card.transform.localPosition.x);
+            //Debug.Log(card.transform.localPosition.x);
             if(((key-1)*40-165) == card.transform.localPosition.x){
                 //ChangeColor(card, false);
                 selectedList.Add(card);
@@ -94,12 +96,17 @@ public class CardDisplayScript : MonoBehaviour
                 card.transform.position += new Vector3(0f, 10f, 0f);
             }
             else{
-                card.transform.parent = null;
-                card.transform.parent = SelectedDisplay.transform;
+                card.transform.SetParent(null, true);
+                card.transform.SetParent(SelectedDisplay.transform, true);
                 selectedList.Remove(card);
                 return;
             }
         }
     }
-
+    bool isSelectable(){
+        if(SelectedDisplayScript.MaxSelectable <= SelectedDisplay.transform.childCount){
+            return false;
+        }
+        return true;
+    }
 }

@@ -146,7 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35a9ed33351abbf439480d8537b34ba3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedDisplay: {fileID: 0}
+  CardID: 
+  text: {fileID: 6130974693127477404}
 --- !u!1 &5873470283723815036
 GameObject:
   m_ObjectHideFlags: 0
