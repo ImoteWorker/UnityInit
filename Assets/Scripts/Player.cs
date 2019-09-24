@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using MyDungeon;
 
-public class FirstPersonMove : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public float moveFrame = 5f;
     public float nanameFrame = 7f;
@@ -22,12 +23,22 @@ public class FirstPersonMove : MonoBehaviour
     public int posX;
     public int posZ;
 
+    public int maxHP;
+    public int nowHP;
+    public int level;
+    public int atk;
+    public int def;
+
     public Floor fs;
     public GameObject generator;
     PlatersMapCreatScript pmcs;
     public GameObject map;
     //CardHolderScript chs;
     //public GameObject cardholder;
+
+    public Slider HPBar;
+    public Text HPUI;
+    public Text LvUI;
     
     void StartPoint()
     {  
@@ -65,6 +76,13 @@ public class FirstPersonMove : MonoBehaviour
 
         pmcs = map.GetComponent<PlatersMapCreatScript>();
         pmcs.write(posX,posZ);
+
+        HPBar.maxValue = maxHP;
+        HPBar.minValue = 0;
+        HPBar.value = nowHP;
+
+        HPUI.text = nowHP + "/" + maxHP;
+        LvUI.text = "Lv." + level;
 
         //chs = cardholder.GetComponent<CardHolderScript>();
         //chs.CardSelect();
@@ -119,7 +137,7 @@ public class FirstPersonMove : MonoBehaviour
                 if(fs.available((int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z)){
                     if(!naname){
                         moveTime = moveFrame;
-                        fs.movePlayer(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
+                        fs.moveChara(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z,1);
                         posX = (int)transform.position.x+toX*(int)z;
                         posZ = (int)transform.position.z+toZ*(int)z;
                         pmcs.write(posX,posZ);
@@ -127,9 +145,9 @@ public class FirstPersonMove : MonoBehaviour
                         return true;
                     }
                     else{
-                        if(fs.available((int)transform.position.x+toX*(int)z,(int)transform.position.z) &&fs.available((int)transform.position.x,(int)transform.position.z+toZ*(int)z)){
-                            moveTime = moveFrame;
-                            fs.movePlayer(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z);
+                        if(fs.availableNaname((int)transform.position.x+toX*(int)z,(int)transform.position.z) &&fs.availableNaname((int)transform.position.x,(int)transform.position.z+toZ*(int)z)){
+                            moveTime = nanameFrame;
+                            fs.moveChara(posX,posZ,(int)transform.position.x+toX*(int)z,(int)transform.position.z+toZ*(int)z,1);
                             posX = (int)transform.position.x+toX*(int)z;
                             posZ = (int)transform.position.z+toZ*(int)z;
                             pmcs.write(posX,posZ);

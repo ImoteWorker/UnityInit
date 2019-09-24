@@ -16,7 +16,7 @@ public class Floor : MonoBehaviour
     static BlockFactoryScript bfs;
     static BlockStript bs;
     static FloorGenerator fg;
-    static FirstPersonMove fpm;
+    static Player ps;
     static PlatersMapCreatScript pmsc;
     public GameObject player;
     public GameObject bf;
@@ -25,12 +25,15 @@ public class Floor : MonoBehaviour
     public static int x;
     public static int z;
     public static int whatFloor = 0; //現在の階層
+    public GameObject enemy1;
+    public int enemyNum;
+    public List<GameObject> enemies = new List<GameObject>();
     void Start()
     {
         bfs = bf.GetComponent<BlockFactoryScript>();
         blockList = bfs.blockList;
         fg = GetComponent<FloorGenerator>();
-        fpm = player.GetComponent<FirstPersonMove>();
+        ps = player.GetComponent<Player>();
         whatFloor += 1;
         if(whatFloor == 1){　/*ダンジョンの切り替えができるか実験 */
             type = false;
@@ -58,7 +61,13 @@ public class Floor : MonoBehaviour
             x = bfs.FloorX;
             z = bfs.FloorZ;
         }
-        fpm.setting();
+        ps.setting();
+        GameObject en;
+        for(int i=0;i<enemyNum;i++){
+            en = Instantiate(enemy1,transform.position,transform.rotation);
+            en.GetComponent<Enemy>().setting();
+            enemies.Add(en);
+        }
     }
 
     public bool startable(int x,int z){
@@ -77,6 +86,20 @@ public class Floor : MonoBehaviour
         if(type){
             if(x<0 || x>fg.AreaX ||z<0 || z>fg.AreaZ) return false;
             else if(Map[x,z]==0) return false;
+            else if(Map[x,z]>=10 && Map[x,z]<30) return false;
+        }
+        else{
+            if(x<0 || x>bfs.FloorX || z<0 || z>bfs.FloorZ) return false;
+            else if(Map[x,z]==0) return false;
+            else if(Map[x,z]>=10 && Map[x,z]<30) return false;
+        }
+        return true;
+    }
+
+    public bool availableNaname(int x,int z){
+        if(type){
+            if(x<0 || x>fg.AreaX ||z<0 || z>fg.AreaZ) return false;
+            else if(Map[x,z]==0) return false;
         }
         else{
             if(x<0 || x>bfs.FloorX || z<0 || z>bfs.FloorZ) return false;
@@ -85,12 +108,13 @@ public class Floor : MonoBehaviour
         return true;
     }
 
-    public void movePlayer(int oldX, int oldZ, int newX, int newZ){
-        Map[oldX,oldZ] -=10;
-        Map[newX,newZ] +=10;
+    public void moveChara(int oldX, int oldZ, int newX, int newZ, int charaType){
+        Map[oldX,oldZ] -=10*charaType;
+        Map[newX,newZ] +=10*charaType;
     }
 
-    public void setChara(int x, int y, int charaType){
-        Map[x,y] += charaType*10;
+    public void setChara(int x, int z, int charaType){
+        Map[x,z] += charaType*10;
     }
+
 }

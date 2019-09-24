@@ -6,26 +6,31 @@ public class TurnManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject map;
-    public FirstPersonMove fpm;
+    public Player ps;
     public PlatersMapCreatScript pmcs;
+    public Floor floor;
     public int turnNum;
     // Start is called before the first frame update
     void Start()
     {
-        fpm = player.GetComponent<FirstPersonMove>();
+        ps = player.GetComponent<Player>();
         pmcs = map.GetComponent<PlatersMapCreatScript>();
+        floor = GetComponent<Floor>();
         turnNum=1;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //2回行動はここで処理
+        
         //pmcs.write();
-        if(fpm.action() == false) return;//プレイヤーが行動してないときはここで終了
+        if(ps.action() == false) return;//プレイヤーが行動してないときはここで終了
         turnNum++;
         //pmcs.write();
         //敵の行動
+        foreach(GameObject en in floor.enemies){
+            en.GetComponent<Enemy>().action();
+        }
 
         //ターン終了時の効果など
     }
