@@ -9,8 +9,16 @@ public class StairsScript : MonoBehaviour
     public Floor fs;
     public GameObject generator; 
     public GameObject player;
+    public GameObject Canvas;
     public int StairPosX;
     public int StairPosZ;
+    static bool setUp = true;
+    void Awake(){
+        if(setUp){
+            DontDestroyOnLoad(Canvas);
+        }
+        setUp = false;
+    }
     // Start is called before the first frame update
     void Start(){
         fs = generator.GetComponent<Floor>();
@@ -46,6 +54,10 @@ public class StairsScript : MonoBehaviour
     void Update()
     {
         if(StairPosX == player.transform.position.x && StairPosZ == player.transform.position.z){
+            Destroy(GameObject.Find("PlayersMap"));
+            Destroy(GameObject.Find("FloorAnnounce"));
+            Destroy(GameObject.Find("Status"));
+            Destroy(GameObject.Find("CardDeck"));
             SceneManager.LoadScene("Main");
         }
     }

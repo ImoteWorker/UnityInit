@@ -8,7 +8,7 @@ using UnityEngine;
 public class BlockFactoryScript : MonoBehaviour
 {
     public GameObject Block;
-    public int MAX_ROOM, MIN_ROOM, MERGIN, FloorX = 40, FloorZ = 40;
+    public int MAX_ROOM, MIN_ROOM, MERGIN, FloorX = 32, FloorZ = 32;
     static public List<Division> divList = new List<Division>();
     static public List<Road> RoadList = new List<Road>();  
     public System.Random rd = new System.Random();

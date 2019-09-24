@@ -9,10 +9,14 @@ public class CardDisplayScript : MonoBehaviour
     bool[] changed = new bool[15];
     public GameObject SelectedDisplay;
     List<GameObject> selectedList = new List<GameObject>();
+    static bool setUp = true;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(!setUp){
+            this.gameObject.SetActive(false);
+        }
+        setUp = false;
     }
 
     // Update is called once per frame

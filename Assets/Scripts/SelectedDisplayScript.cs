@@ -8,10 +8,14 @@ public class SelectedDisplayScript : MonoBehaviour
     GameObject Card;
     static CardScript cs;
     CardGenerator1[] cg1 = new CardGenerator1[MaxSelectable];
+    static bool setUp = true;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(!setUp){
+            this.gameObject.SetActive(false);
+        }
+        setUp = false;
     }
 
     // Update is called once per frame
