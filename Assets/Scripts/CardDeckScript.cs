@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//このスクリプトおよびオブジェクトは山札に対応する
 public class CardDeckScript : MonoBehaviour
 {
-    public static int NumOfCards = 0;
-    static int MaxNumOfCards = 80;
-    public static int[] Type = new int[100];
-    public static int[] Level = new int[100];
-    public static int[] Property = new int[100];
-    public static int NumOfPramater = 3;
-    public Text text;
+    public static int NumOfCards = 0;　//現在の山札にあるカードの枚数
+    static int MaxNumOfCards = 80;　//山札に入れられるカードの最大数
+    public static int[] Type = new int[100];　//山札にあるカードの種類を保存
+    public static int[] Level = new int[100];　//山札にあるカードのレベルを保存
+    public static int[] Property = new int[100];　//山札にあるカードの属性を保存
+    public static int NumOfPramater = 3;　//カードを決定するパラメータの数（種類、レベル、属性）
+    public Text text;　//今はカードの枚数表示に使用
 
-    public void GetCard(int type, int level, int property){
+    public void GetCard(int type, int level, int property){ //手に入れたカードのパラメータを配列に保存して山札に加えるを実現
         if(NumOfCards > MaxNumOfCards){
             return;
         }
@@ -39,9 +39,9 @@ public class CardDeckScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = NumOfCards + "枚";
+        text.text = NumOfCards + "枚";　
     }
-    bool isOkay(){
+    bool isOkay(){　//未使用のメソッド
         if(NumOfCards > MaxNumOfCards){
             return false;
         }

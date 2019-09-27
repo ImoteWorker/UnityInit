@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//このスクリプトおよびオブジェクトは手札に対応する
 public class CardDisplayScript : MonoBehaviour
 {
     public GameObject Card;
@@ -11,11 +11,11 @@ public class CardDisplayScript : MonoBehaviour
     List<GameObject> selectedList = new List<GameObject>();
     static bool setUp = true;
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
         if(!setUp){
-            this.gameObject.SetActive(false);
-        }
+            this.gameObject.SetActive(false);　//手札をシーン間で保持するための手間　2回目以降に読み込まれたDisplayを非表示化
+        }                                      //一回目に読み込まれたDisplayをずっと使用する
         setUp = false;
     }
 
@@ -23,11 +23,11 @@ public class CardDisplayScript : MonoBehaviour
     void Update()
     {
         if(isSelectable()){
-            WhatSelected();
+            WhatSelected(); //キー入力で選ばれたカードをListに追加
         }
         if(selectedList.Count != 0){
-            selectAnimation();
-        }
+            selectAnimation();　//Listにあるカードを少し動き（選択したときにカードがy軸方向に動く）を付けて、
+        }                       //そのカードをSelectedDisplayの子オブジェクトにする（このときカードが表示される場所が変わる）
     }
     void WhatSelected(){
         if(Input.GetKeyDown(KeyCode.Alpha1)){
@@ -74,7 +74,7 @@ public class CardDisplayScript : MonoBehaviour
             }
         }
     }
-    bool ChangeColor(GameObject obj, bool changed){
+    bool ChangeColor(GameObject obj, bool changed){　//未使用のメソッド
         var card = obj.GetComponent<Button>();
         var colors = card.colors;
         if(!changed){

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//このスクリプトおよびオブジェクトは個々のカードに対応する
 public class CardScript : MonoBehaviour
 {
-    public int[] CardID;
+    public int[] CardID;　//このカードが何の種類でレベルで属性なのかを保存
     GameObject SelectedDisplay;
-    bool isClicked = false;
+    bool isClicked = false;　//クリックでカードを選択できるクリックされるとtrue完了でfalseに戻る
     public Text text;
     // Start is called before the first frame update
     void Start()
@@ -25,10 +25,10 @@ public class CardScript : MonoBehaviour
             selectAnimation();
         }
     }
-    public int[] DrowCard(){
-        int[] CardID = new int[CardDeckScript.NumOfPramater];
+    public int[] DrowCard(){　　//山札の配列に保存してある情報をもとにカードの種類、レベル、属性をランダムに決定する
+        int[] CardID = new int[CardDeckScript.NumOfPramater];  //これは山札からカードを引く操作に対応
         int ID = UnityEngine.Random.Range(0, CardDeckScript.NumOfCards);
-        CardID[0] = CardDeckScript.Type[ID];
+        CardID[0] = CardDeckScript.Type[ID];　//Type,Level,Property配列は同じindexにある値を総合してある１つのカードの情報を表す
         CardID[1] = CardDeckScript.Level[ID];
         CardID[2] = CardDeckScript.Property[ID];
         for(int i = ID; i < CardDeckScript.NumOfCards-1; i++){
@@ -42,7 +42,7 @@ public class CardScript : MonoBehaviour
     public void OnClick(){
         isClicked = true;
     }
-    void selectAnimation(){
+    void selectAnimation(){　//CardDisplayにあるものと同じ
         if(transform.position.y <= 75f){
             transform.position += new Vector3(0f, 10f, 0f);
         }
