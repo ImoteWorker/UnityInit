@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
     private bool naname;
     private bool turning;
     private float turnTime;
-    private int dire;
+    public int dire;
     private float x;
     private float z;
 

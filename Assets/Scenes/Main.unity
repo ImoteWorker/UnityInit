@@ -238,6 +238,7 @@ MonoBehaviour:
   turnFrame: 0.2
   masu: 1
   Area: {x: 100, y: 100}
+  dire: 0
   posX: 0
   posZ: 0
   maxHP: 50

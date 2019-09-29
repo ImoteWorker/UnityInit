@@ -13,15 +13,15 @@ public class Enemy : MonoBehaviour
     public int atk;
     public int def;
     protected bool findPlayer = false;
-    protected int x;
-    protected int z;
+    public int x;
+    public int z;
     protected float moveTime;
     protected float moveFrame = 0.2f;
     public int masu=1;
     protected int toX;
     protected int toZ;
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         
     }
@@ -34,8 +34,14 @@ public class Enemy : MonoBehaviour
             moveTime-=Time.deltaTime;
         }
         else transform.position = new Vector3(x,0.5f,z);
+        if(nowHP <= 0){
+            floor.enemies.Remove(this.gameObject);
+            Destroy(this.gameObject);
+        }
     }
-
+    public void setStatus(int MaxHP){
+        nowHP = MaxHP;
+    }
     public void setting()
     {
         player = GameObject.Find("Player");
