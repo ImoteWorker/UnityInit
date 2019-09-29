@@ -110,6 +110,8 @@ MonoBehaviour:
   nowHP: 10
   atk: 2
   def: 2
+  EXP: 30
   x: 0
   z: 0
   masu: 1
+  acting: 0

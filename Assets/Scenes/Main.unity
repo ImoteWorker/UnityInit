@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -249,6 +249,7 @@ MonoBehaviour:
   fs: {fileID: 0}
   generator: {fileID: 1013856452}
   map: {fileID: 2038431806}
+  sd: {fileID: 804652289}
   HPBar: {fileID: 1869378081}
   HPUI: {fileID: 1625519152}
   LvUI: {fileID: 2028709194}

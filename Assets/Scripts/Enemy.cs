@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     public int nowHP;
     public int atk;
     public int def;
+    public int EXP;
     protected bool findPlayer = false;
     public int x;
     public int z;
@@ -20,6 +21,8 @@ public class Enemy : MonoBehaviour
     public int masu=1;
     protected int toX;
     protected int toZ;
+
+    public bool acting;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -33,10 +36,14 @@ public class Enemy : MonoBehaviour
             transform.Translate(toX*masu/moveFrame*Time.deltaTime,0f,toZ*masu/moveFrame*Time.deltaTime);
             moveTime-=Time.deltaTime;
         }
-        else transform.position = new Vector3(x,0.5f,z);
+        else{
+            transform.position = new Vector3(x,0.5f,z);
+            acting = false;
+        }
         if(nowHP <= 0){
             floor.removeChara(x,z,2);
             floor.enemies.Remove(this.gameObject);
+            player.GetComponent<Player>().getExp(EXP);
             Destroy(this.gameObject);
         }
     }
@@ -55,6 +62,7 @@ public class Enemy : MonoBehaviour
         }
         transform.position = new Vector3(x,0.5f,z);
         floor.setChara(x,z,2);
+        acting = false;
     }
 
     public virtual void action(){
@@ -97,6 +105,7 @@ public class Enemy : MonoBehaviour
         x += toX;
         z += toZ;
         moveTime = moveFrame;
+        acting = true;
         //transform.position = new Vector3(x,0.5f,z);
     }
 

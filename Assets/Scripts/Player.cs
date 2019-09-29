@@ -25,14 +25,17 @@ public class Player : MonoBehaviour
 
     public int maxHP;
     public int nowHP;
-    public int level;
+    public static int level=1;
     public int atk;
     public int def;
+    public static int EXP=0;
 
     public Floor fs;
     public GameObject generator;
     PlatersMapCreatScript pmcs;
     public GameObject map;
+    SelectedDisplayScript sds;
+    GameObject sd;
     //CardHolderScript chs;
     //public GameObject cardholder;
 
@@ -84,6 +87,9 @@ public class Player : MonoBehaviour
         HPUI.text = nowHP + "/" + maxHP;
         LvUI.text = "Lv." + level;
 
+        sd = GameObject.Find("SelectedDisplay");
+        sds = sd.GetComponent<SelectedDisplayScript>();
+
         //chs = cardholder.GetComponent<CardHolderScript>();
         //chs.CardSelect();
     }
@@ -100,6 +106,11 @@ public class Player : MonoBehaviour
             transform.Rotate(0f,x*45f*Time.deltaTime/turnFrame,0f);
             turnTime-=Time.deltaTime;
         }
+        HPBar.maxValue = maxHP;
+        //HPBar.minValue = 0;
+        HPBar.value = nowHP;
+        HPUI.text = nowHP + "/" + maxHP;
+        LvUI.text = "Lv." + level;
     }
 
     public bool action(){
@@ -157,7 +168,21 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+            else if(Input.GetKeyDown(KeyCode.Return)){
+                sds.UseCard();
+                return true;
+            }
         }
         return false;
+    }
+
+    public void getExp(int exp){
+        EXP+=exp;
+        if(EXP>=100){
+            level+=1;
+            atk += 10;
+            def += 10;
+            maxHP+=5;
+        }//レベルアップ処理だけど適当なんであとでちゃんと直す
     }
 }

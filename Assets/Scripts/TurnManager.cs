@@ -22,11 +22,13 @@ public class TurnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        //pmcs.write();
+
+        foreach(GameObject en in floor.enemies){
+            if(en.GetComponent<Enemy>().acting) return;
+        }
+        //敵の行動演出中はここで終了
         if(ps.action() == false) return;//プレイヤーが行動してないときはここで終了
         turnNum++;
-        //pmcs.write();
         //敵の行動
         foreach(GameObject en in floor.enemies){
             en.GetComponent<Enemy>().action();

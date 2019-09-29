@@ -21,12 +21,20 @@ public class SelectedDisplayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /* 
         if(Input.GetKeyDown(KeyCode.Return)){　//エンターで選択済みのカードの情報(CardID)をもとにインスタンスを生成
             SetCards();
             AllChildDestroy();　//使用したカードを破棄
             ActivateAll(); //生成したインスタンスのメソッドを実行　カードの効果発動に対応
         }
+        */
+    }
 
+    public void UseCard(){
+        Debug.Log("つかった");
+        SetCards();
+        AllChildDestroy();　//使用したカードを破棄
+        ActivateAll(); //生成したインスタンスのメソッドを実行　カードの効果発動に対応
     }
     void SetCards(){
         for(int i = 0; i < transform.childCount; i++){
