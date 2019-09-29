@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
         }
         else transform.position = new Vector3(x,0.5f,z);
         if(nowHP <= 0){
+            floor.removeChara(x,z,2);
             floor.enemies.Remove(this.gameObject);
             Destroy(this.gameObject);
         }

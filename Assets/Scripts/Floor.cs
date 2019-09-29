@@ -117,4 +117,8 @@ public class Floor : MonoBehaviour
         Map[x,z] += charaType*10;
     }
 
+    public void removeChara(int x, int z, int charaType){
+        Map[x,z] -= charaType*10;
+    }
+
 }
