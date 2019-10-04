@@ -57,7 +57,7 @@ public class CardDisplayScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha9)){
             subWhatSelected(9);
         }
-        if(Input.GetKeyDown(KeyCode.Alpha0) && CardDeckScript.NumOfCards != 0){
+        if(Input.GetKeyDown(KeyCode.Alpha0) && CardDeckScript.NumOfCards != 0　&& transform.childCount < 7){
             GameObject childObject = Instantiate(Card) as GameObject;
             childObject.transform.SetParent(this.transform, true);
         }

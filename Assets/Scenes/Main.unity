@@ -2156,7 +2156,7 @@ MonoBehaviour:
   enemy1: {fileID: 6771534661098941029, guid: 257a5b696a1a54345b97be9f50e1771d, type: 3}
   enemyNum: 2
   enemies: []
-  ItemBoxNum: 0
+  ItemBoxNum: 5
   itemBox: {fileID: 2930600101684284925, guid: 290ed7f772f96ba47926be9207bc9315, type: 3}
 --- !u!114 &1013856456
 MonoBehaviour:
