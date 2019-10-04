@@ -40,7 +40,9 @@ public class CardScript : MonoBehaviour
         return CardID;
     }
     public void OnClick(){
-        isClicked = true;
+        if(SelectedDisplayScript.MaxSelectable > SelectedDisplay.transform.childCount){
+            isClicked = true;
+        }
     }
     void selectAnimation(){　//CardDisplayにあるものと同じ
         if(transform.position.y <= 75f){
