@@ -28,6 +28,8 @@ public class Floor : MonoBehaviour
     public GameObject enemy1;
     public int enemyNum;
     public List<GameObject> enemies = new List<GameObject>();
+    public int ItemBoxNum;
+    public GameObject itemBox;
     void Start()
     {
         bfs = bf.GetComponent<BlockFactoryScript>();
@@ -67,6 +69,11 @@ public class Floor : MonoBehaviour
             en = Instantiate(enemy1,transform.position,transform.rotation);
             en.GetComponent<Enemy>().setting();
             enemies.Add(en);
+        }
+        GameObject ib;
+        for(int i = 0; i < ItemBoxNum; i++){
+            ib = Instantiate(itemBox, transform.position, transform.rotation);
+            ib.GetComponent<ItemBoxScript>().setting();
         }
     }
 

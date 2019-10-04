@@ -9,6 +9,7 @@ public class SelectedDisplayScript : MonoBehaviour
     static CardScript cs;
     CardGenerator1[] cg1 = new CardGenerator1[MaxSelectable];
     static bool setUp = true;　//手札のカードをシーン間で保持するために必要
+    public GameObject CardDisplay;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,13 +22,12 @@ public class SelectedDisplayScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /* 
-        if(Input.GetKeyDown(KeyCode.Return)){　//エンターで選択済みのカードの情報(CardID)をもとにインスタンスを生成
-            SetCards();
-            AllChildDestroy();　//使用したカードを破棄
-            ActivateAll(); //生成したインスタンスのメソッドを実行　カードの効果発動に対応
+        if(Input.GetKey(KeyCode.E)){
+            foreach(Transform childtransform in this.transform){
+                GameObject child = childtransform.gameObject;
+                child.transform.SetParent(CardDisplay.transform, true);
+            }
         }
-        */
     }
 
     public void UseCard(){
@@ -62,7 +62,7 @@ public class CardGenerator1
     public int type, level, property;
     GameObject Player;
     Player player;
-    GameObject Floor;
+    GameObject floor;
     Floor fs;
     Enemy[] enemies = new Enemy[100];
     public CardGenerator1(int Type, int Level, int Property){
@@ -71,8 +71,8 @@ public class CardGenerator1
         property = Property;
         Player = GameObject.Find("Player");
         player = Player.GetComponent<Player>();
-        Floor = GameObject.Find("Generator");
-        fs = Floor.GetComponent<Floor>();
+        floor = GameObject.Find("Generator");
+        fs = floor.GetComponent<Floor>();
         for(int i = 0; i < fs.enemies.Count; i++){
             enemies[i] = fs.enemies[i].GetComponent<Enemy>();
         }
@@ -85,13 +85,50 @@ public class CardGenerator1
             Debug.Log((int)a.x);
             Debug.Log((int)a.y);
             Debug.Log("........");
-            //if(type == 1){
+            if(type == 1){
                 if(a.x == 0 && a.y == 1){
-                    enemies[i].nowHP -= 24;
-                    Debug.Log("Hit! 敵のHP↓");
-                    Debug.Log(enemies[i].nowHP);
+                    enemies[i].nowHP -= (15 * level);     //１マス前方攻撃
                 }
-            //}
+            }
+            else if(type == 2){
+                if(-1 <= a.x && a.x <= 1 && a.y == 1){
+                    enemies[i].nowHP -= (20 * level);     //１マス前方,左右斜め１マス前攻撃
+                }
+            }
+            else if(type == 3){
+                if(-1 <= a.x && a.x <= 1 && -1 <= a.y && a.y <= 1){
+                    enemies[i].nowHP -= (25 * level);     //１マス周囲攻撃
+                }
+            }
+            else if(type == 4){
+                Vector2 b = WallVertical(player.dire);
+                b = Modify((int)b.x, (int)b.y);
+                if(a.x == 0 && a.y > 0 && a.y < b.y){
+                    Vector2 c;
+                    bool f = true;
+                    for(int j = i + 1; j < fs.enemies.Count; j++){
+                        c = Modify(enemies[j].x, enemies[j].z);
+                        if(c.x == 0 && c.y < a.y){
+                            f = false;
+                            break;
+                        }
+                    }
+                    if(f) enemies[i].nowHP -= (30 * level);      //前方１列攻撃
+                }
+            }
+            else if(type == 5){
+                if(Floor.Map[player.posX, player.posZ] == 11){
+                    Vector2 b = WallVertical(0);
+                    Vector2 c = WallVertical(2);
+                    Vector2 d = WallVertical(4);
+                    Vector2 e = WallVertical(6);
+                    if(e.x < enemies[i].x && enemies[i].x < c.x && d.y < enemies[i].z && enemies[i].z < b.y){
+                        enemies[i].nowHP -= (40 * level);  　　　　　//部屋全体攻撃
+                    }
+                }
+            }
+            Debug.Log("敵のHP↓");
+            Debug.Log(enemies[i].nowHP);
         }
     }
     public Vector2 Modify(int enemyX, int enemyZ){
@@ -167,4 +204,47 @@ public class CardGenerator1
     private Vector2 subModify270(int enemyX, int enemyZ){
         return new Vector2(enemyZ, (-1) * enemyX);
     }
+    private Vector2 WallVertical(int dire){
+        //Vector2 a;
+        if(dire == 0){
+            return SUBisThereWall(0, 1);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else if(dire == 1){
+            return SUBisThereWall(1, 1);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else if(dire == 2){
+            return SUBisThereWall(1, 0);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else if(dire == 3){
+            return SUBisThereWall(1, -1);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else if(dire == 4){
+            return SUBisThereWall(0, -1);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else if(dire == 5){
+            return SUBisThereWall(-1, -1);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else if(dire == 6){
+            return SUBisThereWall(-1, 0);
+            //return Modify((int)a.x, (int)a.y);
+        }
+        else{
+            return SUBisThereWall(-1, 1);
+            //return Modify((int)a.x, (int)a.y);
+        }       
+    }
+    private Vector2 SUBisThereWall(int value1, int value2){
+        for(int i = 0; ; i++){
+            if(Floor.Map[player.posX + i * value1, player.posZ + i * value2] == 0){
+                return new Vector2(player.posX + i * value1, player.posZ + i * value2);
+            }
+        }
+    }
+    
 }

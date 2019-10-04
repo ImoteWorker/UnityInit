@@ -108,9 +108,10 @@ public class CardDisplayScript : MonoBehaviour
         }
     }
     bool isSelectable(){
-        if(SelectedDisplayScript.MaxSelectable <= SelectedDisplay.transform.childCount){
+
+        if(SelectedDisplayScript.MaxSelectable <= (SelectedDisplay.transform.childCount+selectedList.Count)){
             return false;
         }
-        return true;
+        else return true;
     }
 }
