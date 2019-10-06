@@ -19,16 +19,18 @@ public class Player : MonoBehaviour
     public int dire;
     private float x;
     private float z;
+    private int actNum;
 
     public int posX;
     public int posZ;
 
     public static int maxHP = 50;
     public static int nowHP = 50;
-    public static int level=10;
-    public static int atk = 10;
-    public static int def = 10;
+    public static int level=1;
+    public static int atk = 5;
+    public static int def = 5;
     public static int EXP=0;
+    public static int type = 1;
 
     public Floor fs;
     public GameObject generator;
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
     public Slider HPBar;
     public Text HPUI;
     public Text LvUI;
+    public Text GameOver;
     
     void StartPoint()
     {  
@@ -80,12 +83,16 @@ public class Player : MonoBehaviour
         pmcs = map.GetComponent<PlatersMapCreatScript>();
         pmcs.write(posX,posZ);
 
+        actNum = 0;
+
         HPBar.maxValue = maxHP;
         HPBar.minValue = 0;
         HPBar.value = nowHP;
 
         HPUI.text = nowHP + "/" + maxHP;
         LvUI.text = "Lv." + level;
+
+        GameOver.enabled = false;
 
         sd = GameObject.Find("SelectedDisplay");
         sds = sd.GetComponent<SelectedDisplayScript>();
@@ -117,6 +124,11 @@ public class Player : MonoBehaviour
         if(moveTime<=0 && turnTime<=0){
             transform.position = new Vector3(Mathf.Round(transform.position.x),0.5f,Mathf.Round(transform.position.z));
             transform.eulerAngles = new Vector3(0f,Mathf.Round(transform.eulerAngles.y/45)*45,0f);
+            if (nowHP <= 0)
+            {
+                GameOver.enabled = true;
+                return false;
+            }
 
             if((x = Input.GetAxisRaw("Horizontal"))!=0){
                 turnTime = turnFrame;
@@ -153,6 +165,8 @@ public class Player : MonoBehaviour
                         posZ = (int)transform.position.z+toZ*(int)z;
                         pmcs.write(posX,posZ);
                         //chs.CardSelect();
+                        actNum++;
+                        if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                         return true;
                     }
                     else{
@@ -163,25 +177,57 @@ public class Player : MonoBehaviour
                             posZ = (int)transform.position.z+toZ*(int)z;
                             pmcs.write(posX,posZ);
                             //chs.CardSelect();
+                            actNum++;
+                            if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                             return true;
                         }
                     }
                 }
             }
+
             else if(Input.GetKeyDown(KeyCode.Return)){
                 sds.UseCard();
+                actNum++;
+                if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                 return true;
             }
         }
         return false;
     }
 
+    public void damage(int pow, int atkType)
+    {
+        double reduce = pow * pow / (pow + def);
+        if(type != 1)
+        {
+            if (atkType < type) atkType += 4;
+            if (atkType - type == 3) reduce *= 0.8;
+            else if (atkType - type == 1) reduce *= 1.2;
+        }
+        nowHP -= (int)reduce;
+
+        /*
+        if (type == 1)
+        {
+            nowHP -= pow - def;
+        }
+        else
+        {
+            if (atkType < type) atkType += 4;
+            if (atkType - type == 3) nowHP -= (int)((pow - def) * 0.8);
+            else if (atkType - type == 1) nowHP -= (int)((pow - def) * 1.2);
+            else nowHP -= pow - def;
+        }
+        こちらは計算式の初期案、上のはネットを参考にした
+        */
+    }
+
     public void getExp(int exp){
         EXP+=exp;
         if(EXP>=100){
             level+=1;
-            atk += 10;
-            def += 10;
+            atk += 1;
+            def += 1;
             maxHP+=5;
         }//レベルアップ処理だけど適当なんであとでちゃんと直す
     }

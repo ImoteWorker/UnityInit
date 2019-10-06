@@ -24,10 +24,18 @@ public class TurnManager : MonoBehaviour
     {
 
         foreach(GameObject en in floor.enemies){
-            if(en.GetComponent<Enemy>().acting) return;
+            if(en.GetComponent<Enemy>().moving) return;
+        }
+        foreach (GameObject en in floor.enemies)
+        {
+            if (en.GetComponent<Enemy>().waiting)
+            {
+                en.GetComponent<Enemy>().changeAct();
+                return;
+            }
         }
         //敵の行動演出中はここで終了
-        if(ps.action() == false) return;//プレイヤーが行動してないときはここで終了
+        if (ps.action() == false) return;//プレイヤーが行動してないときはここで終了
         turnNum++;
         //敵の行動
         foreach(GameObject en in floor.enemies){

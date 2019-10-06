@@ -8,14 +8,17 @@ public class EnemySample : Enemy
 
     public override void action(){
         look();
-        if (findPlayer) moveChase();
-        else moveRandom();
-    }
-    protected override void attack(){
-        
+        if (frontPlayer) attackFront(7, 1);
+        else move();
     }
 
     public override void Start(){
         setStatus(50);
+    }
+
+    protected override void move()
+    {
+        if (findPlayer) moveChase();
+        else moveRandom();
     }
 }
