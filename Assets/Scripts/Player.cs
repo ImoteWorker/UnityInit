@@ -23,11 +23,11 @@ public class Player : MonoBehaviour
     public int posX;
     public int posZ;
 
-    public int maxHP;
-    public int nowHP;
-    public static int level=1;
-    public int atk;
-    public int def;
+    public static int maxHP = 50;
+    public static int nowHP = 50;
+    public static int level=10;
+    public static int atk = 10;
+    public static int def = 10;
     public static int EXP=0;
 
     public Floor fs;

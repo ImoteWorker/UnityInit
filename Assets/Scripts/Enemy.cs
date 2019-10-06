@@ -21,8 +21,10 @@ public class Enemy : MonoBehaviour
     public int masu=1;
     protected int toX;
     protected int toZ;
+    protected int lostTurn = 0;
 
     public bool acting;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -47,9 +49,12 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    //演出がメイン
+
     public void setStatus(int MaxHP){
         nowHP = MaxHP;
     }
+
     public void setting()
     {
         player = GameObject.Find("Player");
@@ -64,30 +69,59 @@ public class Enemy : MonoBehaviour
         floor.setChara(x,z,2);
         acting = false;
     }
+    //開始時の処理
 
     public virtual void action(){
 
     }
+    //これをオーバーライドして行動パターンを作る
 
-    protected void move(){
+    protected void look()
+    {
+        RaycastHit hit;
+        Vector3 temp = player.transform.position - this.transform.position;
+        Vector3 normal = temp.normalized;
+        if(Physics.Raycast(this.transform.position, normal, out hit, 10))
+        {
+            if(hit.transform.gameObject == player)
+            {
+                findPlayer = true;
+                lostTurn = 3;
+            }
+            else
+            {
+                lostTurn--;
+                if (lostTurn <= 0) findPlayer = false;
+            }
+        }
+    }
+    //敵とプレイヤーの間に障害があるかを判定、3ターン隠れると見失う
+    //現状では敵も障害扱いだから2体並んでると後ろのやつが見失ったりする
+
+    protected virtual void move(){
 
     }
+    //これをオーバーライドして移動パターンを作る...つもりだけどactionでまとめてやってもいいかも
 
-    protected void attack(){
-
-    }
-
-    protected void special(){
+    protected virtual void attack(){
 
     }
+    //これをオーバーライドして攻撃パターンを作る...つもりだけど(ry
+
+    protected virtual void special(){
+
+    }
+    //特殊な行動
 
     public void damage(int atk, int atkType){
 
     }
+    //使ってないね
 
     protected void moveAround(){
 
     }
+    //ここに各部屋を回るような移動の方法をかければいいなぁ
 
     protected void moveRandom(){
         while(true){
@@ -108,12 +142,55 @@ public class Enemy : MonoBehaviour
         acting = true;
         //transform.position = new Vector3(x,0.5f,z);
     }
+    //ランダムに移動、動かない時もある
 
     protected void moveChase(){
+        List<Vector2Int> vec2s = new List<Vector2Int>();
+        for(int i= -1; i <= 1; i++)
+        {
+            for(int j = -1; j <= 1; j++)
+            {
+                if(floor.available(x+i,z+j)) vec2s.Add(new Vector2Int(i,j));
+            }
+        }
 
+        Vector2Int playerPos = new Vector2Int((int)player.transform.position.x, (int)player.transform.position.z);
+        Vector2Int nearest = new Vector2Int(0, 0);
+        double distance = double.MaxValue;
+
+        Vector2 dist;
+        foreach(Vector2Int v in vec2s)
+        {
+            dist = playerPos - (new Vector2Int(x,z)+v);
+            if (dist.magnitude < distance)
+            {
+                distance = dist.magnitude;
+                nearest = v;
+            }
+        }
+
+        toX = nearest.x;
+        toZ = nearest.y;
+        floor.moveChara(x, z, x + toX, z + toZ, 2);
+        x += toX;
+        z += toZ;
+        moveTime = moveFrame;
+        acting = true;
     }
+    //追いかけるように移動
 
     protected void moveEscape(){
 
     }
+    //逃げるように移動
+
+    protected void attackFront(int pow, int type){
+
+    }
+    //前に攻撃
+
+    protected void attackLine(int pow, int type){
+
+    }
+    //一直線上に攻撃
 }

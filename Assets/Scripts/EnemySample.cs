@@ -7,8 +7,14 @@ public class EnemySample : Enemy
     // Start is called before the first frame update
 
     public override void action(){
-        moveRandom();
+        look();
+        if (findPlayer) moveChase();
+        else moveRandom();
     }
+    protected override void attack(){
+        
+    }
+
     public override void Start(){
         setStatus(50);
     }
