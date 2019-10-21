@@ -108,7 +108,7 @@ public class ItemBoxScript : MonoBehaviour
             bool f = false;
             for(int i = -1; i <= 1; i++){
                 for(int j = -1; j <= 1; j++){
-                    if(Floor.Map[i + ItemX, j + ItemZ] == 11){
+                    if(Floor.Map[i + ItemX, j + ItemZ] == 11 || Floor.Map[i + ItemX, j + ItemZ] == 12){
                         f = true;
                     }
                 }
@@ -124,6 +124,7 @@ public class ItemBoxScript : MonoBehaviour
                 }
                 Debug.Log("以上");
                 ItemList = null;
+                Destroy(gameObject);
             }
         }
     }

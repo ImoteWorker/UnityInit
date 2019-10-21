@@ -10,6 +10,7 @@ public class CardDisplayScript : MonoBehaviour
     public GameObject SelectedDisplay;
     List<GameObject> selectedList = new List<GameObject>();
     static bool setUp = true;
+    int NumOfAvailableCard = 7;
     // Start is called before the first frame update
     void Start() 
     {
@@ -57,9 +58,25 @@ public class CardDisplayScript : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha9)){
             subWhatSelected(9);
         }
-        if(Input.GetKeyDown(KeyCode.Alpha0) && CardDeckScript.NumOfCards != 0　&& transform.childCount < 7){
-            GameObject childObject = Instantiate(Card) as GameObject;
-            childObject.transform.SetParent(this.transform, true);
+        if(Input.GetKeyDown(KeyCode.Alpha0) && CardDeckScript.NumOfCards != 0　&& transform.childCount + SelectedDisplay.transform.childCount < NumOfAvailableCard){
+            if(CardDeckScript.NumOfCards < NumOfAvailableCard){
+                for(int i = 0; i < CardDeckScript.NumOfCards; i++){
+                    GameObject childObject = Instantiate(Card) as GameObject;
+                    childObject.transform.SetParent(this.transform, true);
+                    if(transform.childCount + SelectedDisplay.transform.childCount == NumOfAvailableCard){
+                        break;
+                    }
+                }
+            }
+            else{
+                for(int i = 0; i < NumOfAvailableCard - (transform.childCount + SelectedDisplay.transform.childCount); i++){
+                    GameObject childObject = Instantiate(Card) as GameObject;
+                    childObject.transform.SetParent(this.transform, true);
+                if(transform.childCount + SelectedDisplay.transform.childCount == NumOfAvailableCard){
+                        break;
+                    }
+                }
+            }
         }
     }
     void subWhatSelected(int key){
