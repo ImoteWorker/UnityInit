@@ -8,11 +8,13 @@ public class ItemBoxScript : MonoBehaviour
     int ItemX, ItemZ;
     GameObject CardDeck;
     CardDeckScript cds;
+    ModifyPosition mp;
     // Start is called before the first frame update
     public void setting()
     {
         CardDeck = GameObject.Find("CardDeck");
         cds = CardDeck.GetComponent<CardDeckScript>();
+        mp = new ModifyPosition();
         int RateOfNum = (int)UnityEngine.Random.Range(0, 100);
         int Num;
         if(RateOfNum < 40){
@@ -104,13 +106,19 @@ public class ItemBoxScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I) && ItemList != null){
+        if(Input.GetKey(KeyCode.I) && ItemList != null){
             bool f = false;
             for(int i = -1; i <= 1; i++){
                 for(int j = -1; j <= 1; j++){
                     if(Floor.Map[i + ItemX, j + ItemZ] == 11 || Floor.Map[i + ItemX, j + ItemZ] == 12){
                         f = true;
                     }
+                }
+            }
+            if(f){
+                Vector2 a = mp.Modify(ItemX, ItemZ);
+                if(!(a.x == 0 && a.y == 1)){
+                    f = false;
                 }
             }
             if(f){

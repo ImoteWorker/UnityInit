@@ -35,6 +35,7 @@ public class StairsScript : MonoBehaviour
             StairPosX = posX;
             StairPosZ = posZ;
         }
+        Floor.Map[StairPosX,StairPosZ] = 3;
     }
     void StartPoint()
     {    

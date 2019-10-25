@@ -79,8 +79,9 @@ public class CardGenerator1
     }
     public void Activate(){
         Vector2 a;
+        ModifyPosition mp = new ModifyPosition();
         for(int i = 0; i < fs.enemies.Count; i++){
-            a = Modify(enemies[i].x, enemies[i].z);
+            a = mp.Modify(enemies[i].x, enemies[i].z);
             Debug.Log("........");
             Debug.Log((int)a.x);
             Debug.Log((int)a.y);
@@ -101,13 +102,13 @@ public class CardGenerator1
                 }
             }
             else if(type == 4){
-                Vector2 b = WallVertical(player.dire);
-                b = Modify((int)b.x, (int)b.y);
+                Vector2 b = mp.WallVertical(player.dire);
+                b = mp.Modify((int)b.x, (int)b.y);
                 if(a.x == 0 && a.y > 0 && a.y < b.y){
                     Vector2 c;
                     bool f = true;
-                    for(int j = i + 1; j < fs.enemies.Count; j++){
-                        c = Modify(enemies[j].x, enemies[j].z);
+                    for(int j = 0; j < fs.enemies.Count; j++){
+                        c = mp.Modify(enemies[j].x, enemies[j].z);
                         if(c.x == 0 && c.y < a.y){
                             f = false;
                             break;
@@ -118,10 +119,10 @@ public class CardGenerator1
             }
             else if(type == 5){
                 if(Floor.Map[player.posX, player.posZ] == 11){
-                    Vector2 b = WallVertical(0);
-                    Vector2 c = WallVertical(2);
-                    Vector2 d = WallVertical(4);
-                    Vector2 e = WallVertical(6);
+                    Vector2 b = mp.WallVertical(0);
+                    Vector2 c = mp.WallVertical(2);
+                    Vector2 d = mp.WallVertical(4);
+                    Vector2 e = mp.WallVertical(6);
                     if(e.x < enemies[i].x && enemies[i].x < c.x && d.y < enemies[i].z && enemies[i].z < b.y){
                         enemies[i].nowHP -= (40 * level);  　　　　　//部屋全体攻撃
                     }
@@ -130,6 +131,19 @@ public class CardGenerator1
             Debug.Log("敵のHP↓");
             Debug.Log(enemies[i].nowHP);
         }
+    }
+}
+public class ModifyPosition
+{
+    GameObject Player;
+    Player player;
+    GameObject floor;
+    Floor fs;
+    public ModifyPosition(){
+        Player = GameObject.Find("Player");
+        player = Player.GetComponent<Player>();
+        floor = GameObject.Find("Generator");
+        fs = floor.GetComponent<Floor>();
     }
     public Vector2 Modify(int enemyX, int enemyZ){
         if(player.dire == 0){
@@ -204,7 +218,7 @@ public class CardGenerator1
     private Vector2 subModify270(int enemyX, int enemyZ){
         return new Vector2(enemyZ, (-1) * enemyX);
     }
-    private Vector2 WallVertical(int dire){
+    public Vector2 WallVertical(int dire){
         //Vector2 a;
         if(dire == 0){
             return SUBisThereWall(0, 1);

@@ -10,7 +10,7 @@ public class CardDisplayScript : MonoBehaviour
     public GameObject SelectedDisplay;
     List<GameObject> selectedList = new List<GameObject>();
     static bool setUp = true;
-    int NumOfAvailableCard = 7;
+    int NumOfAvailableCard = 9;
     // Start is called before the first frame update
     void Start() 
     {

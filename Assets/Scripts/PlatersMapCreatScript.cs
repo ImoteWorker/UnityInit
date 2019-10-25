@@ -6,7 +6,7 @@ public class PlatersMapCreatScript : MonoBehaviour
 {
     public Text map;
     public GameObject player;
-    bool[,] Paint = new bool[100,100];
+    int[,] Paint = new int[100,100];
     public float timeOut = 3000f;
     private float timeTrigger;
     // Start is called before the first frame update
@@ -14,7 +14,7 @@ public class PlatersMapCreatScript : MonoBehaviour
     {
         for(int i = 0; i < Floor.x; i++){
             for(int j = 0; j < Floor.z; j++){
-                Paint[i, j] = false;
+                Paint[i, j] = 0;
             }
         }
         map.text = "";
@@ -32,12 +32,12 @@ public class PlatersMapCreatScript : MonoBehaviour
         //}
     }
     void RoadPaint(int x, int z){
-        if(Floor.Map[x,z]%10 == 2 && !Paint[x,z]){
-            Paint[x,z] = true;
+        if(Floor.Map[x,z]%10 == 2 && Paint[x,z] == 0){
+            Paint[x,z] = 1;
             if(Floor.Map[x-1,z]%10 == 2){
                 for(int i = 1;;i++){
                     if(Floor.Map[x-i,z]%10 == 2){
-                        Paint[x-i,z] = true;
+                        Paint[x-i,z] = 1;
                     }else{
                         return;
                     }
@@ -45,7 +45,7 @@ public class PlatersMapCreatScript : MonoBehaviour
             }else if(Floor.Map[x,z-1]%10 == 2){
                 for(int i = 1;;i++){
                     if(Floor.Map[x,z-i]%10 == 2){
-                        Paint[x,z-i] = true;
+                        Paint[x,z-i] = 1;
                     }else{
                         return;
                     }
@@ -54,7 +54,7 @@ public class PlatersMapCreatScript : MonoBehaviour
             if(Floor.Map[x+1,z]%10 == 2){
                 for(int i = 1;;i++){
                     if(Floor.Map[x+i,z]%10 == 2){
-                        Paint[x+i,z] = true;
+                        Paint[x+i,z] = 1;
                     }else{
                         return;
                     }
@@ -62,7 +62,7 @@ public class PlatersMapCreatScript : MonoBehaviour
             }else if(Floor.Map[x,z+1]%10 == 2){
                 for(int i = 1;;i++){
                     if(Floor.Map[x,z+i]%10 == 2){
-                        Paint[x,z+i] = true;
+                        Paint[x,z+i] = 1;
                     }else{
                         return;
                     }
@@ -73,13 +73,17 @@ public class PlatersMapCreatScript : MonoBehaviour
         }
     }
     void RoomPaint(int x, int z){
-        if(Floor.Map[x,z]%10 == 1 && !Paint[x,z]){
-            Paint[x,z] = true;
+        if(Floor.Map[x,z]%10 == 1 && Paint[x,z] == 0){
+            Paint[x,z] = 1;
             RoomPaint(x-1,z);
             RoomPaint(x,z-1);
             RoomPaint(x+1,z);
             RoomPaint(x,z+1);
-        }else{
+        }
+        else if(Floor.Map[x,z] == 3 && Paint[x,z] != 3){
+            Paint[x,z] = 3;
+        }
+        else{
             return;
         }
     }
@@ -90,9 +94,13 @@ public class PlatersMapCreatScript : MonoBehaviour
                 if(i == x && j == z){
                     map.text += "@";
                 }
-                else if(Paint[i,j]){
+                else if(Paint[i,j] == 3){
+                    map.text += "x";
+                }
+                else if(Paint[i,j] == 1){
                     map.text += ".";
-                }else{
+                }
+                else{
                     map.text += " ";
                 }
             }
