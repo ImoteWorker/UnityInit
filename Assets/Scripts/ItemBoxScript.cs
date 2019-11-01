@@ -132,6 +132,7 @@ public class ItemBoxScript : MonoBehaviour
                 }
                 Debug.Log("以上");
                 ItemList = null;
+                Floor.Map[ItemX, ItemZ] -= 30; 
                 Destroy(gameObject);
             }
         }

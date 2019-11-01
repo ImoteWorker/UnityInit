@@ -7,7 +7,7 @@ public class SelectedDisplayScript : MonoBehaviour
     public static int MaxSelectable = 3;　//選択できるカードの最大数
     GameObject Card;
     static CardScript cs;
-    CardGenerator1[] cg1 = new CardGenerator1[MaxSelectable];
+    public CardGenerator1[] cg1 = new CardGenerator1[MaxSelectable];
     static bool setUp = true;　//手札のカードをシーン間で保持するために必要
     public GameObject CardDisplay;
     // Start is called before the first frame update
@@ -54,7 +54,6 @@ public class SelectedDisplayScript : MonoBehaviour
             Destroy(transform.GetChild(i).gameObject);
         }
     }
-   
 }
 
 public class CardGenerator1
@@ -65,6 +64,7 @@ public class CardGenerator1
     GameObject floor;
     Floor fs;
     Enemy[] enemies = new Enemy[100];
+    //GameObject Sword;
     public CardGenerator1(int Type, int Level, int Property){
         type = Type;
         level = Level;
@@ -130,6 +130,24 @@ public class CardGenerator1
             }
             Debug.Log("敵のHP↓");
             Debug.Log(enemies[i].nowHP);
+        }
+    }
+    public void WeaponsMotion(){
+        if(type == 1){
+            KnifeScript.KnifeMotionStart = true;
+        }
+        else if(type == 2){
+            AxeScript.AxeMotionStart = true;
+        }
+        else if(type == 3){
+            SwordScript.SwordMotionStart = true;
+        }
+        else if(type == 4){
+            ArrowScript.ArrowMotionStart = true;
+            BowScript.BowMotionStart = true;
+        }
+        else if(type == 5){
+            StaffScript.StaffMotionstart = true;
         }
     }
 }

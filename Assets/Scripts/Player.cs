@@ -38,6 +38,20 @@ public class Player : MonoBehaviour
     public GameObject map;
     SelectedDisplayScript sds;
     GameObject sd;
+    public GameObject Sword; //アニメ追加
+    public GameObject Knife;
+    public GameObject Axe;
+    public GameObject Bow;
+    public GameObject Arrow;
+    public GameObject Staff;
+    CardScript Card;
+    bool AnimeNumFlag = true;
+    bool FirstWeaponAnime = true;
+    bool SecondWeaponAnime;
+    bool ThirdWeaponAnime;
+    bool AllMotionStart;
+    float TimeCount = 0f;
+    //Animator animator;
     //CardHolderScript chs;
     //public GameObject cardholder;
 
@@ -96,7 +110,7 @@ public class Player : MonoBehaviour
 
         sd = GameObject.Find("SelectedDisplay");
         sds = sd.GetComponent<SelectedDisplayScript>();
-
+        //animator = GetComponent<Animator>();
         //chs = cardholder.GetComponent<CardHolderScript>();
         //chs.CardSelect();
     }
@@ -118,6 +132,41 @@ public class Player : MonoBehaviour
         HPBar.value = nowHP;
         HPUI.text = nowHP + "/" + maxHP;
         LvUI.text = "Lv." + level;
+        ItemAnimation();
+        if(AllMotionStart){
+            if(FirstWeaponAnime){
+                if(sds.cg1[0] != null){
+                    sds.cg1[0].WeaponsMotion();
+                }
+                FirstWeaponAnime = false;
+                SecondWeaponAnime = true;
+                TimeCount = 0f;
+            }
+            else if(SecondWeaponAnime && TimeCount >= 1.0f){
+                if(sds.cg1[1] != null){
+                    Debug.Log("こんにちは");
+                    WeaponActivate(sds.cg1[1].type);
+                    sds.cg1[1].WeaponsMotion();
+                }
+                SecondWeaponAnime = false;
+                ThirdWeaponAnime = true;
+                TimeCount = 0f;
+            }
+            else if(ThirdWeaponAnime && TimeCount >= 1.0f){
+                if(sds.cg1[2] != null){
+                    WeaponActivate(sds.cg1[2].type);
+                    sds.cg1[2].WeaponsMotion();
+                }
+                ThirdWeaponAnime = false;
+                FirstWeaponAnime = true;
+                AllMotionStart = false;
+                sds.cg1[0] = null; sds.cg1[1] = null; sds.cg1[2] = null;
+            }
+            TimeCount += Time.deltaTime;
+        }
+        if(Input.GetKey(KeyCode.E)){
+            AllWeaponInactivate();
+        }
     }
 
     public bool action(){
@@ -187,6 +236,7 @@ public class Player : MonoBehaviour
 
             else if(Input.GetKeyDown(KeyCode.Return)){
                 sds.UseCard();
+                AllMotionStart = true;
                 actNum++;
                 if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                 return true;
@@ -194,7 +244,45 @@ public class Player : MonoBehaviour
         }
         return false;
     }
-
+    void ItemAnimation()
+    {
+        if(sd.transform.childCount != 0 && AnimeNumFlag)
+        {
+            Card = sd.GetComponentInChildren<CardScript>();
+            WeaponActivate(Card.CardID[0]);
+            AnimeNumFlag = false;
+        }
+        else if(sd.transform.childCount == 0 && !AllMotionStart)
+        {
+            AnimeNumFlag = true;
+        }
+    }
+    void WeaponActivate(int type){
+        if(type == 1){
+            Knife.gameObject.SetActive(true);
+        }
+        else if(type == 2){
+            Axe.gameObject.SetActive(true);
+        }
+        else if(type == 3){
+            Sword.gameObject.SetActive(true);
+        }
+        else if(type == 4){          
+            Arrow.gameObject.SetActive(true);         
+            Bow.gameObject.SetActive(true);
+        }
+        else if(type == 5){
+            Staff.gameObject.SetActive(true);
+        }
+    }
+    void AllWeaponInactivate(){
+        Sword.gameObject.SetActive(false);
+        Knife.gameObject.SetActive(false);
+        Axe.gameObject.SetActive(false);
+        Arrow.gameObject.SetActive(false);
+        Bow.gameObject.SetActive(false);
+        Staff.gameObject.SetActive(false);
+    }
     public void damage(int pow, int atkType)
     {
         double reduce = pow * pow / (pow + def);
