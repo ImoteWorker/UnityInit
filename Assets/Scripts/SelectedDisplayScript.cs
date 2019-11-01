@@ -59,8 +59,8 @@ public class SelectedDisplayScript : MonoBehaviour
 public class CardGenerator1
 {　//ここにカードの効果を書いていくことになる予定
     public int type, level, property;
-    GameObject Player;
-    Player player;
+    GameObject player;
+    Player pl;
     GameObject floor;
     Floor fs;
     Enemy[] enemies = new Enemy[100];
@@ -69,8 +69,8 @@ public class CardGenerator1
         type = Type;
         level = Level;
         property = Property;
-        Player = GameObject.Find("Player");
-        player = Player.GetComponent<Player>();
+        player = GameObject.Find("Player");
+        pl = player.GetComponent<Player>();
         floor = GameObject.Find("Generator");
         fs = floor.GetComponent<Floor>();
         for(int i = 0; i < fs.enemies.Count; i++){
@@ -102,7 +102,7 @@ public class CardGenerator1
                 }
             }
             else if(type == 4){
-                Vector2 b = mp.WallVertical(player.dire);
+                Vector2 b = mp.WallVertical(pl.dire);
                 b = mp.Modify((int)b.x, (int)b.y);
                 if(a.x == 0 && a.y > 0 && a.y < b.y){
                     Vector2 c;
@@ -118,7 +118,7 @@ public class CardGenerator1
                 }
             }
             else if(type == 5){
-                if(Floor.Map[player.posX, player.posZ] == 11){
+                if(Floor.Map[pl.posX, pl.posZ] == 11){
                     Vector2 b = mp.WallVertical(0);
                     Vector2 c = mp.WallVertical(2);
                     Vector2 d = mp.WallVertical(4);
@@ -127,6 +127,21 @@ public class CardGenerator1
                         enemies[i].nowHP -= (40 * level);  　　　　　//部屋全体攻撃
                     }
                 }
+                else if(Floor.Map[pl.posX, pl.posZ] == 12){
+                    if(a.x == 0 && a.y == 1){
+                        enemies[i].nowHP -= (5 * level);
+                    }
+                }
+            }
+            else if(type == 6){
+                int healQuantity = 20 * level;
+                if((Player.maxHP - Player.nowHP) > healQuantity){
+                    Player.nowHP += healQuantity;
+                }
+                else{
+                    Player.nowHP = Player.maxHP;
+                }
+                healQuantity = 0; 
             }
             Debug.Log("敵のHP↓");
             Debug.Log(enemies[i].nowHP);

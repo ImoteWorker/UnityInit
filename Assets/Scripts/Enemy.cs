@@ -42,6 +42,7 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!Player.AllMotionStart){
         if(moveTime>0){
             transform.Translate(toX*masu/moveFrame*Time.deltaTime,0f,toZ*masu/moveFrame*Time.deltaTime);
             moveTime-=Time.deltaTime;
@@ -62,6 +63,7 @@ public class Enemy : MonoBehaviour
             floor.enemies.Remove(this.gameObject);
             player.GetComponent<Player>().getExp(EXP);
             Destroy(this.gameObject);
+        }
         }
     }
     //演出がメイン

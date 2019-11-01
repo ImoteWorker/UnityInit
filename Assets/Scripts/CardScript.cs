@@ -9,13 +9,39 @@ public class CardScript : MonoBehaviour
     GameObject SelectedDisplay;
     bool isClicked = false;　//クリックでカードを選択できるクリックされるとtrue完了でfalseに戻る
     public Text text;
+    Image image;
+    SpriteRenderer spriteRenderer;
+    public Sprite knife;
+    public Sprite Axe;
+    public Sprite Sword;
+    public Sprite Arrow;
+    public Sprite Staff;
+    public Sprite Heal;
+    public GameObject Level1;
+    public GameObject Level2;
+    public GameObject Level3;
+    public GameObject Level4;
+    public GameObject Level5;
     // Start is called before the first frame update
     void Start()
     {
         SelectedDisplay = GameObject.Find("SelectedDisplay");
         CardID = DrowCard();
         //Debug.Log(CardID[0]);
-        text.text = CardID[0] + "," + CardID[1] + "," + CardID[2];
+        image = GetComponent<Image>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
+        if(CardID[0] == 1) image.sprite = knife;
+        else if(CardID[0] == 2) image.sprite = Axe;
+        else if(CardID[0] == 3) image.sprite = Sword;
+        else if(CardID[0] == 4) image.sprite = Arrow;
+        else if(CardID[0] == 5) image.sprite = Staff;
+        else if(CardID[0] == 6) image.sprite = Heal;
+        /*if(CardID[1] == 1){
+            GameObject levelMark = Instantiate(Level1, transform);
+            //levelMark.transform.SetParent(transform);
+        }*/
+        text.text = CardID[1].ToString();
+        //text.color = 
     }
 
     // Update is called once per frame
@@ -40,7 +66,7 @@ public class CardScript : MonoBehaviour
         return CardID;
     }
     public void OnClick(){
-        if(SelectedDisplayScript.MaxSelectable > SelectedDisplay.transform.childCount){
+        if(SelectedDisplayScript.MaxSelectable > SelectedDisplay.transform.childCount && !Player.AllMotionStart){
             isClicked = true;
         }
     }

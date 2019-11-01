@@ -10,7 +10,7 @@ public class CardDisplayScript : MonoBehaviour
     public GameObject SelectedDisplay;
     List<GameObject> selectedList = new List<GameObject>();
     static bool setUp = true;
-    int NumOfAvailableCard = 9;
+    int NumOfAvailableCard = 8;
     // Start is called before the first frame update
     void Start() 
     {
@@ -84,7 +84,7 @@ public class CardDisplayScript : MonoBehaviour
         for(int i = 0; i < transform.childCount; i++){
             card = transform.GetChild(i).gameObject;
             //Debug.Log(card.transform.localPosition.x);
-            if(((key-1)*40-165) == card.transform.localPosition.x){
+            if(((key-1)*50-175) == card.transform.localPosition.x){
                 //ChangeColor(card, false);
                 selectedList.Add(card);
                 break;

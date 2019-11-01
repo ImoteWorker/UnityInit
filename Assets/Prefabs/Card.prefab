@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 80}
-  m_SizeDelta: {x: 40, y: 50}
+  m_AnchoredPosition: {x: 0, y: 10}
+  m_SizeDelta: {x: 50, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2068529327511393318
 CanvasRenderer:
@@ -68,15 +68,15 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 73b098af431c2054897850fb416a7288, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
-  m_UseSpriteMesh: 0
+  m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
 --- !u!114 &7868614961033903226
 MonoBehaviour:
@@ -148,6 +148,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardID: 
   text: {fileID: 6130974693127477404}
+  knife: {fileID: 21300000, guid: 5795fb8a4fd005445b705cad390ef115, type: 3}
+  Axe: {fileID: 21300000, guid: be8bd87715a0db34ba18a18d76be81a4, type: 3}
+  Sword: {fileID: 21300000, guid: 0cfb0ad33ea98c74292f6d3dba8ab1a3, type: 3}
+  Arrow: {fileID: 21300000, guid: 435142cc2c71ca64789adf1a3d4e4b1e, type: 3}
+  Staff: {fileID: 21300000, guid: 73b098af431c2054897850fb416a7288, type: 3}
+  Heal: {fileID: 21300000, guid: 38db72a7dda66574c8b7b0d0ac8975aa, type: 3}
+  Level1: {fileID: 4948071868272398170, guid: 5bfbdaaf0aaaae84cab9e93b517c8da2, type: 3}
+  Level2: {fileID: 6513867324269347341, guid: fbfdec5c3da961644a2feedddcd90dd2, type: 3}
+  Level3: {fileID: 6268007214328716671, guid: 49b9afe01cb96744984e6d91d50fb387, type: 3}
+  Level4: {fileID: 444988985511498570, guid: 11e3f715a8160a84cb09113c00a9342c, type: 3}
+  Level5: {fileID: 2035730634905490905, guid: 75c64458faefe854f873d788e4c4534b, type: 3}
 --- !u!1 &5873470283723815036
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,10 +191,10 @@ RectTransform:
   m_Father: {fileID: 8853777639384394363}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 10, y: 12}
+  m_SizeDelta: {x: 50, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1699530956156981424
 CanvasRenderer:
@@ -206,7 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.8862745, g: 0.5835558, b: 0.29411763, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -218,8 +229,8 @@ MonoBehaviour:
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 118
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

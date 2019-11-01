@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
     bool FirstWeaponAnime = true;
     bool SecondWeaponAnime;
     bool ThirdWeaponAnime;
-    bool AllMotionStart;
+    public static bool AllMotionStart;
     float TimeCount = 0f;
     //Animator animator;
     //CardHolderScript chs;
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
     }
 
     public bool action(){
-        if(moveTime<=0 && turnTime<=0){
+        if(moveTime<=0 && turnTime<=0 && !AllMotionStart){
             transform.position = new Vector3(Mathf.Round(transform.position.x),0.5f,Mathf.Round(transform.position.z));
             transform.eulerAngles = new Vector3(0f,Mathf.Round(transform.eulerAngles.y/45)*45,0f);
             if (nowHP <= 0)
@@ -215,7 +215,7 @@ public class Player : MonoBehaviour
                         pmcs.write(posX,posZ);
                         //chs.CardSelect();
                         actNum++;
-                        if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
+                        //if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                         return true;
                     }
                     else{
@@ -227,18 +227,18 @@ public class Player : MonoBehaviour
                             pmcs.write(posX,posZ);
                             //chs.CardSelect();
                             actNum++;
-                            if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
+                            //if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                             return true;
                         }
                     }
                 }
             }
 
-            else if(Input.GetKeyDown(KeyCode.Return)){
+            else if(Input.GetKeyDown(KeyCode.Return) && !AllMotionStart){
                 sds.UseCard();
                 AllMotionStart = true;
                 actNum++;
-                if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
+                //if (actNum % 5 == 0 && nowHP < maxHP) nowHP++;
                 return true;
             }
         }

@@ -37,20 +37,23 @@ public class ItemBoxScript : MonoBehaviour
             int type, level, property;
             int[] card = new int[3];
             //Type
-            if(RateOfType < 50){
+            if(RateOfType < 45){
                 type = 1;
             }
-            else if(RateOfType < 70){
+            else if(RateOfType < 65){
                 type = 2;
             }
-            else if(RateOfType < 80){
+            else if(RateOfType < 75){
                 type = 3;
             }
-            else if(RateOfType < 90){
+            else if(RateOfType < 85){
                 type = 4;
             }
-            else{
+            else if(RateOfType < 92){
                 type = 5;
+            }
+            else{
+                type = 6;
             }
             //Level
             if(RateOfLevel < 50){

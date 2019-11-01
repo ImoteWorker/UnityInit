@@ -516,95 +516,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'a
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-
-    a
-
-    a
-
-    a
-
-    a
-
-
-    a
-
-    a
-
-    a
-
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-
-    a
-
-
-    aa
-
-
-    a
-
-    a
-
-    a
-
-
-    a
-
-    a
-
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-
-    a
-
-    a
-
-    a
-
-    a
-
-    a
-
-
-    a'
+  m_Text: 
 --- !u!222 &131753217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1371,8 +1283,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 30}
-  m_SizeDelta: {x: 370, y: 0}
+  m_AnchoredPosition: {x: 0, y: 40}
+  m_SizeDelta: {x: 400, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &590164103
 MonoBehaviour:
@@ -2220,8 +2132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -310, y: 30}
-  m_SizeDelta: {x: 122, y: 50}
+  m_AnchoredPosition: {x: -304, y: 40}
+  m_SizeDelta: {x: 150, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &804652291
 MonoBehaviour:
@@ -3016,7 +2928,7 @@ MonoBehaviour:
   enemy1: {fileID: 6771534661098941029, guid: 257a5b696a1a54345b97be9f50e1771d, type: 3}
   enemyNum: 5
   enemies: []
-  ItemBoxNum: 10
+  ItemBoxNum: 5
   itemBox: {fileID: 2930600101684284925, guid: 290ed7f772f96ba47926be9207bc9315, type: 3}
 --- !u!114 &1013856456
 MonoBehaviour:
